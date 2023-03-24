@@ -1,2 +1,2 @@
-# Teka-ki-kalkulator
+# Tekaški kalkulator
 Projektna naloga iz OPB
