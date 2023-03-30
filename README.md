@@ -8,3 +8,6 @@ V tem repozitoriju se nahajajo datoteke, ki tvorijo spletno aplikacijo, ki je ra
 S to aplikacijo je konec brskanja po najrazličnejših spletnih straneh organizatorjev tekmovanj, ki vsebujejo rezultate posameznih tekem, saj je tukaj vse zbrano na enem mestu. Poleg centraliziranosti podatkov pa ne potrebujete več žepnega računalnika in matematičnega znanja, da bi potegnili zaključke o svojih in rezultetih drugih, saj to delo program opravi namesto vas.
 
 Povezava do Lucidchart tabele: https://lucid.app/lucidchart/a1b93589-db0d-476b-b64e-1dca6335c181/view?page=0_0&invitationId=inv_a6e119e3-ad27-4a2f-8fc3-8bc244ec5d4e#
+
+![alt text](https://github.com/MartinZust123/Tekaski-kalkulator/blob/main/Tree%20diagrams.png)
+
