@@ -32,7 +32,6 @@ def running_calc(dist, time, goal, age):
     else:
         time_goal = time - adjusted_pace*(dist - goal)
     try:
-        time_goal = time - adjusted_pace*(dist - goal)
         time_goal_hours_A, time_goal_minutes_A = divmod(time_goal-E, 60)
         time_goal_hours_B, time_goal_minutes_B = divmod(time_goal+E, 60)
         time_goal_seconds_A = round((time_goal_minutes_A % 1) * 60)
