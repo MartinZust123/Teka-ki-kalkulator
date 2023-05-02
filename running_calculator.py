@@ -1,7 +1,6 @@
 import math
 import datetime
 
-a = 0.1*(1/2)
 # metri
 dist = 42000
 #minute
