@@ -3,14 +3,14 @@ import bottle
 
 @bottle.get("/")
 def prvi_zaslon():
-    return bottle.template("zacetna_stran_tk.html")
+    return bottle.template("views/zacetna_stran_tk.html")
 
 @bottle.get("/rezultati/")
 def rezultati_tekov():
-    return bottle.template("rezultati.html")
+    return bottle.template("views/rezultati.html")
 
 @bottle.get("/kalkulator/")
 def vrni_kalkulator():
-    return bottle.template("kalkulator.html")
+    return bottle.template("views/kalkulator.html")
 
 bottle.run(reloader=True)
