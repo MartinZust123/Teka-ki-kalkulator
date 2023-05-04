@@ -2,7 +2,7 @@ import math
 import datetime
 
 # metri
-dist = 42000
+dist = 4200
 #minute
 time = 130
 goal = 84000
@@ -33,7 +33,7 @@ def running_calc(dist, time, goal, age):
         time_goal = time - adjusted_pace*(dist - goal)
     try:
         time_goal_hours_A, time_goal_minutes_A = divmod(time_goal-E/20, 60) #tuki pazi ce je stvar negativna
-        time_goal_hours_B, time_goal_minutes_B = divmod(time_goal+E, 60)
+        time_goal_hours_B, time_goal_minutes_B = divmod(time_goal+E/2, 60)
         time_goal_seconds_A = round((time_goal_minutes_A % 1) * 60)
         time_goal_seconds_B = round((time_goal_minutes_B % 1) * 60)
         time_goal_minutes_A = math.floor(time_goal_minutes_A)
