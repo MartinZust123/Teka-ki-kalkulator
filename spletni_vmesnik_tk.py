@@ -4,14 +4,14 @@ import bottleext
 
 @bottle.get("/")
 def prvi_zaslon():
-    return bottle.template("views/zacetna_stran_tk.html")
+    return bottle.template("zacetna_stran_tk.html")
 
 @bottle.get("/rezultati/")
 def rezultati_tekov():
-    return bottle.template("views/rezultati.html")
+    return bottle.template("rezultati.html")
 
 @bottle.get("/kalkulator/")
 def vrni_kalkulator():
-    return bottle.template("views/kalkulator.html")
+    return bottle.template("kalkulator.html")
 
 bottle.run(reloader=True)
