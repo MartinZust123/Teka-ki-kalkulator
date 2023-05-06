@@ -14,4 +14,9 @@ def rezultati_tekov():
 def vrni_kalkulator():
     return bottle.template("kalkulator.html")
 
+@bottle.get("/static/<filepath:path>")
+def vrni_staticno_datoteko(filepath):
+    return bottle.static_file(filepath, 'static')
+
+
 bottle.run(reloader=True)
