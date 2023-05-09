@@ -22,6 +22,14 @@ def kraski22_10():
 def kraski22_10z():
     return bottle.template("2022_kraski_10_Zn.html")
 
+@bottle.get("/blejski22_10m/")
+def blejski22_m():
+    return bottle.template("2022_blejski_Mn.html")
+
+@bottle.get("/kraski22_10z/")
+def kraski22_10z():
+    return bottle.template("2022_kraski_10_Zn.html")
+
 @bottle.get("/static/<filepath:path>")
 def vrni_staticno_datoteko(filepath):
     return bottle.static_file(filepath, 'static')
