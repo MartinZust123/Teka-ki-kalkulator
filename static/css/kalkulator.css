@@ -1,0 +1,9 @@
+table {
+    background-color: aqua;
+}
+body {
+    background-image: url(/static/slike/runner_2.jpg);
+}
+h1 {
+    font-size: 60px;
+}
