@@ -1,9 +1,20 @@
 table {
+    margin: 0 auto;
     background-color: aqua;
 }
 body {
     background-image: url(/static/slike/runner_2.jpg);
+    display: flex;
+    align-items: center;
 }
 h1 {
     font-size: 60px;
+}
+h2 {
+    font-size: 40px;
+}
+.my-input {
+    width: 300px;
+    height: 100px;
+    font-size: 80px;
 }
