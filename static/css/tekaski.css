@@ -1,4 +1,4 @@
-table {
+.ozadje {
     background-image: url(/static/slike/runner_2.jpg);
     background-color: #cccccc;
     margin-left:auto;
@@ -15,6 +15,12 @@ h2 {
 p {
     font-size: 30px;
 }
-input {
+.forme {
     font-size: 50px;
+}
+.mfom {
+    font-size: 20px;
+}
+.prijava {
+    background-color: pink;
 }
