@@ -14,6 +14,10 @@ def rezultati_tekov():
 def vrni_kalkulator():
     return bottle.template("kalkulator.html")
 
+@bottle.get("/prijava/")
+def vrni_prijavo():
+    return bottle.template("prijava.html")
+
 @bottle.get("/statistika/")
 def vrni_statistiko():
     return bottle.template("statistika.html", ime="Ioann", priimek="Stanković", starost="26", spol="moški")
