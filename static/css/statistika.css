@@ -1,0 +1,24 @@
+table {
+    margin: 0 auto;
+    background-color: aqua;
+}
+h1 {
+    font-size: 60px;
+}
+body {
+    background-image: url(/static/slike/runner_2.jpg);
+}
+h2 {
+    font-size: 40px;
+}
+.forme {
+    font-size: 30px;
+    width: 200px;
+    height: 70px;
+}
+.forme1 {
+    width: 700px;
+    height: 90px;
+    font-size: 40px;
+    font-weight: bold;
+}
