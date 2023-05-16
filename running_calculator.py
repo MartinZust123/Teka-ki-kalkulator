@@ -2,7 +2,7 @@ import math
 import datetime
 
 # metri
-dist = 4200
+dist = 42000
 #minute
 time = 130
 goal = 84000
