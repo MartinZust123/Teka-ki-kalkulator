@@ -1,0 +1,50 @@
+from bottle import *
+import auth_public as auth
+import numpy as np
+import statistics
+
+try:
+    import psycopg2, psycopg2.extensions, psycopg2.extras
+    psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
+
+    conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
+
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    postgreSQL_select_Query = 'SELECT "LR" FROM "2022_kranj_10_Z" LIMIT 10'
+    cur.execute(postgreSQL_select_Query)
+    print("Selecting first 10 values from the column LR in 2022_kranj_10_Z table using cursor.fetchall")
+    lr_values = [row[0] for row in cur.fetchall()]
+
+    # Get the column names from the PostgreSQL schema
+    cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name='2022_kranj_10_Z' ORDER BY ordinal_position DESC LIMIT 1")
+    last_column_name = cur.fetchone()[0]
+
+    # Generate the SELECT query dynamically with the last column name
+    select_last_column_query = 'SELECT "{}" FROM "2022_kranj_10_Z"'.format(last_column_name)
+    cur.execute(select_last_column_query)
+    print("Selecting the last column from the table 2022_kranj_10_Z using cursor.fetchall")
+    last_column_values = cur.fetchall()
+
+    # Extract values from the last column and convert them to seconds
+    column_values = [row[0] for row in last_column_values]
+
+    time_to_seconds = lambda t: sum(int(x) * 60 ** i for i, x in enumerate(reversed(t.split(':'))))
+    column_seconds = [time_to_seconds(time_str) for time_str in column_values]
+
+except (Exception, psycopg2.Error) as error:
+    print("Error while fetching data from PostgreSQL", error)
+
+finally:
+    # closing database connection.
+    if conn:
+        cur.close()
+        conn.close()
+        print("PostgreSQL connection is closed")
+
+# Optimalna leta
+Najboljsa_leta = 2022 - np.array(lr_values)
+N_L = statistics.mean(Najboljsa_leta)
+
+# Exhoustion factor
+pace_column = np.array(column_seconds) / 10
