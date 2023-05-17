@@ -41,7 +41,7 @@ finally:
 
 
 
-# Exhoustion factor
+# Pace
 pace_column = np.array(column_seconds) / 10
 
 date_list = []
