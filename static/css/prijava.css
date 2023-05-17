@@ -1,0 +1,10 @@
+.my-input {
+    width: 300px;
+    height: 100px;
+    font-size: 80px;
+}
+body {
+    background-image: url(/static/slike/runner_2.jpg);
+    display: flex;
+    align-items: center;
+}
