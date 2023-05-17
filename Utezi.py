@@ -56,6 +56,6 @@ def fetch_data():
     # Exhoustion factor
     pace_column = np.array(column_seconds) / 10
     pace_column_2 = np.array(column_seconds_2) / 3.3
-    exhoustion_factor = pace_column/pace_column_2
+    exhoustion_factor = statistics.mean(pace_column/pace_column_2)
 
-    return N_L, pace_column, pace_column_2, exhoustion_factor
+    return N_L, exhoustion_factor
