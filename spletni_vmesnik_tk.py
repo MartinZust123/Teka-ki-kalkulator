@@ -18,6 +18,10 @@ def vrni_kalkulator():
 def vrni_prijavo():
     return bottle.template("prijava.html")
 
+@bottle.get("/registracija/")
+def registracija():
+    return bottle.template("registracija.html")
+
 @bottle.get("/statistika/")
 def vrni_statistiko():
     return bottle.template("statistika.html", ime="Ioann", priimek="Stanković", starost="26", spol="moški")
