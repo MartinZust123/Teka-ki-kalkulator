@@ -1,11 +1,10 @@
-from bottle import *
-import auth_public as auth
-import numpy as np
-import statistics
-
-try:
-    import psycopg2, psycopg2.extensions, psycopg2.extras
-    psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
+def fetch_data():
+    import data.auth_public as auth
+    import numpy as np
+    import statistics
+    try:
+        import psycopg2, psycopg2.extensions, psycopg2.extras
+        psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 
         conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 
