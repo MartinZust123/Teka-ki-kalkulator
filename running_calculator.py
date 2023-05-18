@@ -1,5 +1,6 @@
 import math
 import datetime
+from Utezi import fetch_data
 
 # metri
 dist = 42000
@@ -7,6 +8,8 @@ dist = 42000
 time = 130
 goal = 84000
 age = 29
+
+data = fetch_data()
 
 def running_calc(dist, time, goal, age):
     # Preveri parametre

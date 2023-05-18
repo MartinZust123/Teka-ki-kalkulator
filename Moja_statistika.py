@@ -20,13 +20,10 @@ try:
     cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name='2022_kranj_10_Z' ORDER BY ordinal_position DESC LIMIT 1")
     last_column_name = cur.fetchone()[0]
 
-    # Generate the SELECT query dynamically with the last column name
     select_last_column_query = 'SELECT "{}" FROM "2022_kranj_10_Z"'.format(last_column_name)
     cur.execute(select_last_column_query)
-    print("Selecting the last column from the table 2022_kranj_10_Z using cursor.fetchall")
     last_column_values = cur.fetchall()
 
-    # Extract values from the last column and convert them to seconds
     column_values = [row[0] for row in last_column_values]
 
     time_to_seconds = lambda t: sum(int(x) * 60 ** i for i, x in enumerate(reversed(t.split(':'))))
@@ -44,7 +41,7 @@ finally:
 
 
 
-# Exhoustion factor
+# Pace
 pace_column = np.array(column_seconds) / 10
 
 date_list = []
