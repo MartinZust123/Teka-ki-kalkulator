@@ -45,7 +45,7 @@ class Repo:
         self.cur.execute(sql_cmd)
         return [typ.from_dict(d) for d in self.cur.fetchall()]
     
-    def dobi_gen_id(self, typ: Type[TEK], id: int | str, id_col = "id") -> T:
+    def dobi_gen_id(self, typ: Type[TEK], id: int | str, id_col = "id") -> TEK:
         """
         Generična metoda, ki vrne dataclass objekt pridobljen iz baze na podlagi njegovega idja.
         """
