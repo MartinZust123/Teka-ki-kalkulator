@@ -23,3 +23,10 @@ h2 {
 .one-liner {
     display: inline-block;
 }
+
+.your-input {
+    width: 150px;
+    height: 80px;
+    font-size: 50px;
+}
+
