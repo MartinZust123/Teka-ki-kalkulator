@@ -54,6 +54,11 @@ def ljubljanski22_m():
 def kranjski22_10m():
     return bottle.template("2022_kranjski_10_Zn.html")
 
+@bottle.get("/preracunaj/")
+def preracunaj_get():
+    pretecena = bottle.request.query["pretecena"]
+    return bottle.template("kalkulator1.html", pretecena= pretecena)
+
 @bottle.get("/static/<filepath:path>")
 def vrni_staticno_datoteko(filepath):
     return bottle.static_file(filepath, 'static')

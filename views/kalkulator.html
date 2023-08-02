@@ -12,15 +12,25 @@
             height: 80px;
             font-size: 50px;
             }
+        .blur-bracket {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            filter: blur(1px); /* Apply blur effect to the text */
+            }
         .blur-text {
             position: absolute;
+            font-size: 30px;
             top: 50%;
-            right: 5px;
+            right: 30px;
             transform: translate(0, -50%);
             color: gray;
             }
     </style>
     <body>
+        <form action="/preracunaj/">
         <table border="3" cellspacing="0" cellpading="0" width="60%" align="center">
             <tr>
                 <td colspan="2" align="center">
@@ -32,13 +42,13 @@
                     <h2>Pretečena razdalja</h2>
                 </td>
                 <td>
-                    <div class="my-input-container">
-                        <!-- Območje za vnos -->
-                        <input class="my-input" type="text" id="pretecena" oninput="updateBlurredInput()" />
-                    
-                        <!-- Zamegljeno besedilo "km" -->
+                    <!-- Območje za vnos -->
+                    <span class="blur-bracket">
+                        <input class="my-input-container" type="text" id="pretecena" name='pretecena' oninput="updateBlurredInput()" />
                         <span class="blur-text" id="blurText">km</span>
-                    </div>
+                    </span>
+                    <!-- Zamegljeno besedilo "km" -->
+                    
                 </td>
             </tr>
             <tr>
@@ -46,20 +56,20 @@
                     <h2>Porabljen čas</h2>
                 </td>
                 <td>
-                    <div class="my-input-container">
-                        <!-- Območje za vnos -->
-                        <input class="my-input" type="text" id="min"/>
+                    <!-- Območje za vnos -->
+                    <span class="blur-bracket">
+                        <input class="my-input-container" type="text" id="min" oninput="updateBlurredInput()"/>
                     
                         <!-- Zamegljeno besedilo "min" -->
                         <span class="blur-text" id="blurText">min</span>
-                    </div>
-                    <div class="my-input-container">
+                    </span>
+                    <span class="blur-bracket">
                         <!-- Območje za vnos -->
-                        <input class="my-input" type="text" id="sek"/>
+                        <input class="my-input-container" type="text" id="sek" oninput="updateBlurredInput()"/>
                     
                         <!-- Zamegljeno besedilo "km" -->
                         <span class="blur-text" id="blurText">sek</span>
-                    </div>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -67,18 +77,17 @@
                     <h2>Nova razdalja</h2>
                 </td>
                 <td>
-                    <div class="my-input-container">
-                        <!-- Območje za vnos -->
-                        <input class="my-input" type="text" id="zeljena" oninput="updateBlurredInput()" />
+                    <!-- Območje za vnos -->
+                    <span class="blur-bracket">
+                        <input class="my-input-container" type="text" id="zeljena" oninput="updateBlurredInput()" />
                     
                         <!-- Zamegljeno besedilo "km" -->
                         <span class="blur-text" id="blurText">km</span>
-                    </div>
-                    <div class="my-input-container">
-                        <input class="my-input" type="submit" value="Preračunaj"/>
-                    </div>
+                    </span>
+                    <input class="my-input" type="submit" value="Preračunaj"/>
                 </td>
             </tr>
         </table>
+    </form>
     </body>
 </html>
