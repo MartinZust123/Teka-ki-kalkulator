@@ -11,6 +11,22 @@ def prvi_zaslon():
 def prvi_zaslon():
     return bottle.template("zacetna_stran_tk.html")
 
+@bottle.get("/registracija/")
+def registracija():
+    return bottle.template("registracija.html")
+
+@bottle.get("/registriraj_se/")
+def registriraj_se():
+    geslo = bottle.request.query["password"]
+    geslo1 = bottle.request.query["password1"]
+    username1 = bottle.request.query["username1"]
+    ime = bottle.request.query["name"]
+    starost = bottle.request.query["age"]
+    if geslo != geslo1:
+        return bottle.template("registracija1.html")
+    else:
+        return bottle.template("zacentna_stran.html", username= username1)
+
 @bottle.get("/rezultati/")
 def rezultati_tekov():
     return bottle.template("rezultati.html")
