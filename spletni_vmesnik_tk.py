@@ -57,7 +57,11 @@ def kranjski22_10m():
 @bottle.get("/preracunaj/")
 def preracunaj_get():
     pretecena = bottle.request.query["pretecena"]
-    return bottle.template("kalkulator1.html", pretecena= pretecena)
+    minute = bottle.request.query["min"]
+    sek = bottle.request.query["sek"]
+    zeljena = bottle.request.query["zeljena"]
+    starost = bottle.request.query["starost"]
+    return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost)
 
 @bottle.get("/static/<filepath:path>")
 def vrni_staticno_datoteko(filepath):
