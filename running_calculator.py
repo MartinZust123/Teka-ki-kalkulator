@@ -48,4 +48,5 @@ def running_calc(dist, time, goal, age):
         return "Neveljavni parametri 3"
 
 print(running_calc(10000,44,5000,55))
+print(running_calc(dist, time, goal, age))
 
