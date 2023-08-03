@@ -7,3 +7,4 @@ def tekaski_kal(pretecena,cas,zeljena,starost):
     elif pretecena < zeljena:
         cas1 = cas + (zeljena - pretecena) * ex_fac * pace
         return cas1
+

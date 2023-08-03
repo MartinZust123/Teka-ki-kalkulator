@@ -1,5 +1,6 @@
 import bottle
 import bottleext
+import naiven_tekaski_kalkulator
 # from model_tekaski import Parkirišče
 
 @bottle.get("/")
@@ -61,7 +62,10 @@ def preracunaj_get():
     sek = bottle.request.query["sek"]
     zeljena = bottle.request.query["zeljena"]
     starost = bottle.request.query["starost"]
-    return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost)
+    cas = naiven_tekaski_kalkulator.tekaski_kal(int(pretecena)*1000, int(minute)+(int(sek)/60), int(zeljena)*1000, int(starost))
+    nove_min = int(cas // 1)
+    nove_sek = int(((cas - nove_min) * 60) // 1)
+    return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, nove_min = nove_min, nove_sek = nove_sek)
 
 @bottle.get("/static/<filepath:path>")
 def vrni_staticno_datoteko(filepath):

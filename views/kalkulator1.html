@@ -1,11 +1,45 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Kalkulator</title>
-        <meta charset="utf-8"/>
-        <link rel="stylesheet" href="/static/css/kalkulator.css">
+<head>
+    <title>Kalkulator</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/static/css/kalkulator.css">
+    <style>
+        /* Add custom styles for the table */
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        table {
+            width: 60%;
+            height: 60%;
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+            table-layout: fixed;
+            border: 1px solid #ccc;
+        }
+        td {
+            padding: 20px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
-    <h2>Tvoja pretečena razdalja: {{pretecena}} kilometrov.</h2> 
-    <h2>Tvoj čas za to razdaljo: {{minute}}:{{sek}}.</h2>
-    <h2>Preteči želiš: {{zeljena}} kilometrov.</h2>
+    <!-- Create a table with a single row and single cell -->
+    <table>
+        <tr>
+            <td>
+                <h2>Tvoja pretečena razdalja: {{pretecena}} kilometrov.</h2> <br>
+                <h2>Tvoj čas za to razdaljo: {{minute}}:{{sek}}.</h2> <br>
+                <h2>Preteči želiš: {{zeljena}} kilometrov.</h2> <br>
+                <h1>Pričakovan čas za to razdaljo je: {{nove_min}}:{{nove_sek}}.</h1>
+            </td>
+        </tr>
+    </table>
 </body>
+</html>
