@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Prva stran</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="/static/css/tekaski_tk.css/">
+    </head>
+    <body>
+        <table border="0" cellspacing="0" cellpading="0" width="90%" align="center" class="ozadje">
+            <tr>
+                <td colspan="2" align="center">
+                    <h1>Tekaški kalkulator</h1> 
+                </td>
+                <td>
+                    <table border="2" class="odjava" align="center">
+                        <tr>
+                            <td>
+                                <h3>Uporabnik: {{username}}</h3>
+                            </td>
+                        <tr>
+                            <td>
+                                <form action="/odjava/">
+                                    <input type="submit" value="Odjava" class="mfom"/>
+                                </form>
+                            </td>
+                        </tr>
+                    
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                    &nbsp
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <form action="/rezultati/">
+                        <input type="submit" value="Rezultati preteklih maratonov" class="forme"/>
+                    </form>
+                </td>
+                <td align="center">
+                    <form action="/kalkulator/">
+                        <input type="submit" value="Tekaški kalkulator" class="forme"/>
+                    </form>
+                </td>
+                <td align="center">
+                    <form action="/statistika/">
+                        <input type="submit" value="Tvoja statistika" class="forme"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

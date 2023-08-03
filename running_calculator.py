@@ -9,7 +9,7 @@ time = 130
 goal = 84000
 age = 29
 
-#data = fetch_data()
+data = fetch_data()
 
 def running_calc(dist, time, goal, age):
     #Preveri parametre
@@ -47,5 +47,5 @@ def running_calc(dist, time, goal, age):
     except ValueError:
         return "Neveljavni parametri 3"
 
-print(running_calc(10000,44.5,5000,55))
+print(running_calc(10000,44,5000,55))
 

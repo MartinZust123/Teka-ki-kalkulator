@@ -7,6 +7,10 @@ import naiven_tekaski_kalkulator
 def prvi_zaslon():
     return bottle.template("zacetna_stran_tk.html")
 
+@bottle.get("/odjava/")
+def prvi_zaslon():
+    return bottle.template("zacetna_stran_tk.html")
+
 @bottle.get("/rezultati/")
 def rezultati_tekov():
     return bottle.template("rezultati.html")
@@ -66,6 +70,11 @@ def preracunaj_get():
     nove_min = int(cas // 1)
     nove_sek = int(((cas - nove_min) * 60) // 1)
     return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, nove_min = nove_min, nove_sek = nove_sek)
+
+@bottle.get("/prijavi_se/")
+def prijavi_se():
+    username = bottle.request.query["username"]
+    return bottle.template("zacentna_stran.html", username = username)
 
 @bottle.get("/static/<filepath:path>")
 def vrni_staticno_datoteko(filepath):
