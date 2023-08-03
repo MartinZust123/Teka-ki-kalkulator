@@ -6,6 +6,7 @@ body {
     background-image: url(/static/slike/runner_2.jpg);
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 h1 {
     font-size: 60px;
