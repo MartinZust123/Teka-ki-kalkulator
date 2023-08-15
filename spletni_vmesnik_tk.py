@@ -1,5 +1,34 @@
+#import os
+#
+#from bottleext import get, post, run, request, template, redirect, static_file, url, response, template_user
+#import bottle # naprej uporabljamo bottleext
+#
+#from data.Database import Repo
+#from data.Modeli import *
+#from data.Services import AuthService
+#from functools import wraps
+#
+#SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
+#RELOADER = os.environ.get('BOTTLE_RELOADER', True)
+#DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
+#
+#repo = Repo()
+#auth = AuthService(repo)
+#
+#def cookie_required(f):
+#    """
+#    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
+#    """
+#    @wraps(f)
+#    def decorated( *args, **kwargs):
+#        cookie = request.get_cookie("uporabnik")
+#        if cookie:
+#            return f(*args, **kwargs)
+#        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
+#
+#    return decorated
+
 import bottle
-import bottleext
 import naiven_tekaski_kalkulator
 # from model_tekaski import Parkirišče
 
@@ -15,8 +44,27 @@ def prvi_zaslon():
 def registracija():
     return bottle.template("registracija.html")
 
+@bottle.get("/uredi_profil/")
+def uredi_profil():
+    ime = bottle.request.query["ime"]
+    priimek = bottle.request.query["priimek"]
+    starost = bottle.request.query["starost"]
+    return bottle.template("uredi_profil.html",ime=ime, priimek=priimek,starost=starost)
+
 @bottle.get("/registriraj_se/")
 def registriraj_se():
+    geslo = bottle.request.query["password"]
+    geslo1 = bottle.request.query["password1"]
+    username1 = bottle.request.query["username1"]
+    ime = bottle.request.query["name"]
+    starost = bottle.request.query["age"]
+    if geslo != geslo1:
+        return bottle.template("registracija1.html")
+    else:
+        return bottle.template("zacentna_stran.html", username= username1)
+
+@bottle.get("/posodobi_profil/")
+def posodobi_profil():
     geslo = bottle.request.query["password"]
     geslo1 = bottle.request.query["password1"]
     username1 = bottle.request.query["username1"]
