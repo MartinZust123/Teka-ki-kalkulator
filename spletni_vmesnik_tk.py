@@ -58,6 +58,7 @@ def registriraj_se():
     username1 = bottle.request.query["username1"]
     ime = bottle.request.query["name"]
     starost = bottle.request.query["age"]
+    spol = bottle.request.query["gender"]
     if geslo != geslo1:
         return bottle.template("registracija1.html")
     else:
