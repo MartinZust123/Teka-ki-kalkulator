@@ -9,7 +9,7 @@ time = 130
 goal = 84000
 age = 29
 
-data = fetch_data()
+#data = fetch_data()
 
 def running_calc(dist, time, goal, age):
     #Preveri parametre
@@ -43,10 +43,10 @@ def running_calc(dist, time, goal, age):
         time_goal_minutes_B = math.floor(time_goal_minutes_B)
         time_string_A = f"{int(time_goal_hours_A):02d}:{int(time_goal_minutes_A):02d}:{int(time_goal_seconds_A):02d}"
         time_string_B = f"{int(time_goal_hours_B):02d}:{int(time_goal_minutes_B)+1:02d}:{int(time_goal_seconds_B):02d}"
-        return f"Ciljan cas:{time_string_A}, {time_string_B}"
+        return f"Ciljan cas od {time_string_A} do {time_string_B}"
     except ValueError:
         return "Neveljavni parametri 3"
 
-print(running_calc(10000,44,5000,55))
-print(running_calc(dist, time, goal, age))
+#print(running_calc(10000,44,5000,55))
+#print(running_calc(dist, time, goal, age))
 
