@@ -62,4 +62,4 @@ class AuthService:
 
         self.repo.dodaj_gen(uporabnik, serial_col=None)
 
-        return UporabnikDto(username=uporabnik, role=rola)
+        return UporabnikDto(uporabnisko_ime=uporabnik)

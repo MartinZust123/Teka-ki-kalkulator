@@ -4,7 +4,7 @@ from dataclasses_json import dataclass_json
 @dataclass_json
 @dataclass
 class RangTekaca:
-    id: int = field(default="")
+    id: int = field(default=0)
     rang: str = field(default="")
 
 @dataclass_json
@@ -16,6 +16,11 @@ class Uporabnik:
     spol: str = field(default="")
     datum_rojstva: str = field(default="")
     rang_tekaca: RangTekaca = field(default="")
+
+@dataclass_json
+@dataclass
+class UporabnikDto:
+    uporabnisko_ime: str = field(default="")
 
 @dataclass_json
 @dataclass
@@ -38,7 +43,7 @@ class VrstaTeka:
 @dataclass_json
 @dataclass
 class Tek:
-    id: int = field(default="")
+    id: int = field(default=0)
     tekac: Uporabnik = field(default="")
     vrsta_teka: VrstaTeka = field(default="")
     razdalja: Razdalja = field(default="")

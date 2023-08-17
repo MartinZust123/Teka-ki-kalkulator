@@ -1,33 +1,32 @@
-#import os
-#
-#from bottleext import get, post, run, request, template, redirect, static_file, url, response, template_user
-#import bottle # naprej uporabljamo bottleext
-#
-#from data.Database import Repo
-#from data.Modeli import *
-#from data.Services import AuthService
-#from functools import wraps
-#
-#SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
-#RELOADER = os.environ.get('BOTTLE_RELOADER', True)
-#DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
-#
-#repo = Repo()
-#auth = AuthService(repo)
-#
-#def cookie_required(f):
-#    """
-#    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
-#    """
-#    @wraps(f)
-#    def decorated( *args, **kwargs):
-#        cookie = request.get_cookie("uporabnik")
-#        if cookie:
-#            return f(*args, **kwargs)
-#        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
-#
-#    return decorated
+import os
 
+from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
+import bottle # naprej uporabljamo bottleext
+
+from data.Database import Repo
+from data.Modeli import *
+from data.Services import AuthService
+from functools import wraps
+
+SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
+RELOADER = os.environ.get('BOTTLE_RELOADER', True)
+DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
+
+repo = Repo()
+auth = AuthService(repo)
+
+def cookie_required(f):
+    """
+    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
+    """
+    @wraps(f)
+    def decorated( *args, **kwargs):
+        cookie = request.get_cookie("uporabnik")
+        if cookie:
+            return f(*args, **kwargs)
+        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
+
+    return decorated
 import bottle
 import naiven_tekaski_kalkulator
 import running_calculator as rc
@@ -111,19 +110,19 @@ def kranjski22_10m():
 
 @bottle.get("/kraski22_10z/")
 def kraski22_10z():
-    return bottle.template("2022_kraski_10_Zn.html")
+    return bottle.template("2022_kraski_10_Z.html")
 
 @bottle.get("/blejski22_10z/")
 def blejski22_m():
-    return bottle.template("2022_blejski_Zn.html")
+    return bottle.template("2019_nocna_10_Z.html")
 
 @bottle.get("/ljub22_10z/")
 def ljubljanski22_m():
-    return bottle.template("2022_ljubljanski_10_Z.html")
+    return bottle.template("2021_ljubljanski_10_Z.html")
 
 @bottle.get("/kranj22_10z/")
 def kranjski22_10m():
-    return bottle.template("2022_kranjski_10_Zn.html")
+    return bottle.template("2022_kranj_10_Z.html")
 
 @bottle.get("/preracunaj/")
 def preracunaj_get():
