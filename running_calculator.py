@@ -4,8 +4,8 @@ from Utezi import fetch_data
 
 # metri
 dist = 42000
-#minute
-time = 130
+#sekunde
+time = 130*60
 goal = 84000
 age = 29
 
@@ -24,16 +24,16 @@ def running_calc(dist, time, goal, age):
     else:
         exhoustion_factor = abs(age - 29) / 70 + 0.1
         exhoustion_factor = min(exhoustion_factor, 0.45)
-    pace = time / dist
+    pace = (time/60) / dist
     if pace <= 2:
         return "Neveljavni parametri 2"
     E = round(0.5 * goal + 0.5*(pace),3)
     adjusted_pace = pace + (exhoustion_factor * pace)
     if goal >= dist:
         extra_time = (goal - dist) * adjusted_pace
-        time_goal = extra_time + time
+        time_goal = extra_time + (time/60)
     else:
-        time_goal = time - adjusted_pace*(dist - goal)
+        time_goal = (time/60) - adjusted_pace*(dist - goal)
     try:
         time_goal_hours_A, time_goal_minutes_A = divmod(time_goal-E/20, 60) #tuki pazi ce je stvar negativna
         time_goal_hours_B, time_goal_minutes_B = divmod(time_goal+E/2, 60)
