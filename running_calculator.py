@@ -1,6 +1,6 @@
 import math
 import datetime
-from Utezi import fetch_data
+from poberi_utezi import fetch_utezi
 
 # metri
 dist = 42000
@@ -9,7 +9,8 @@ time = 130*60
 goal = 84000
 age = 29
 
-data = fetch_data()
+utezi = fetch_utezi()
+opt_leta = 2023 - utezi[0][2] #loh das v celo stevilko btw
 
 def running_calc(dist, time, goal, age):
     # Preveri parametre
@@ -22,7 +23,7 @@ def running_calc(dist, time, goal, age):
     elif age >= 90:
         return "prestari"
     else:
-        exhoustion_factor = abs(age - 29) / 70 + 0.1
+        exhoustion_factor = abs(age - opt_leta) / 70 + 0.1
         exhoustion_factor = min(exhoustion_factor, 0.45)
     pace = (time/60) / dist
     if pace <= 2:
