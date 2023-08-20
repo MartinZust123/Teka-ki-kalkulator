@@ -9,6 +9,11 @@ time = 130*60
 goal = 84000
 age = 29
 
+dist = 5000
+time= 18*60 + 24
+age = 22
+goal = 10000
+
 utezi = fetch_utezi()
 opt_leta = 2023 - utezi[0][2] #loh das v celo stevilko btw
 
@@ -23,8 +28,8 @@ def running_calc(dist, time, goal, age):
     elif age >= 90:
         return "prestari"
     else:
-        exhoustion_factor = abs(age - opt_leta) / 70 + 0.1
-        exhoustion_factor = min(exhoustion_factor, 0.45)
+        exhoustion_factor = abs(age - opt_leta) / 120 + 0.1
+        exhoustion_factor = min(exhoustion_factor, 0.05)
     pace = (time/60) / dist
     if pace <= 2:
         return "Neveljavni parametri 2"

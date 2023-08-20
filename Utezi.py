@@ -29,5 +29,6 @@ def fetch_data():
             conn.close()
             print("PostgreSQL connection is closed")
 
-    return min_times_and_lrs
+    return 
+
 

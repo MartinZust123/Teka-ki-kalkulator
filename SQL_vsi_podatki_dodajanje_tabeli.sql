@@ -176,3 +176,10 @@ SELECT 'Z', "Priimek in ime", "LR",
         CASE WHEN "2km" = '&nbsp;' THEN NULL ELSE "2km"::TIME END,
         CASE WHEN "Rezultat" = 'DNF' THEN NULL ELSE "Rezultat"::TIME END
 FROM "2022_kraski_5_Z";
+
+GRANT all
+    ON oseba
+    TO matejg;
+ GRANT all
+    ON utezi
+    TO matejg;
