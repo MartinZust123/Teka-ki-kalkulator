@@ -19,6 +19,11 @@ class Uporabnik:
 
 @dataclass_json
 @dataclass
+class UporabnikDto:
+    uporabnisko_ime: str = field(default="")
+
+@dataclass_json
+@dataclass
 class Cas:
     cas: str = field(default=0)
     izbrano: bool = field(default=False)
