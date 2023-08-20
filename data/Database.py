@@ -4,7 +4,7 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)
 import os
 from re import sub
 
-from typing import List, TypeVar, Type, Callable, Any
+from typing import List, TypeVar, Type, Callable, Any, Union
 import data.auth_public as auth
 from data.Modeli import *
 from pandas import DataFrame
@@ -44,7 +44,7 @@ class Repo:
         self.cur.execute(sql_cmd)
         return [typ.from_dict(d) for d in self.cur.fetchall()]
     
-    def dobi_gen_id(self, typ: Type[TEK], id: int | str, id_col = "id") -> TEK:
+    def dobi_gen_id(self, typ: Type[TEK], id: Union[int, str], id_col = "id") -> TEK:
         """
         Generična metoda, ki vrne dataclass objekt pridobljen iz baze na podlagi njegovega idja.
         """
@@ -59,7 +59,7 @@ class Repo:
     
         return typ.from_dict(d)
     
-    def izbrisi_gen(self,  typ: Type[TEK], id: int | str, id_col = "id"):
+    def izbrisi_gen(self,  typ: Type[TEK], id: Union[int,str], id_col = "id"):
         """
         Generična metoda, ki vrne dataclass objekt pridobljen iz baze na podlagi njegovega idja.
         """
@@ -137,24 +137,15 @@ class Repo:
         if use_camel_case:
             col = self.camel_case(col)
         
-        match col_type:
-
-            case "int":
-                return f'"{col}" BIGINT{" PRIMARY KEY" if  is_key else ""}'
-            case "int32":
-                return f'"{col}" BIGINT{" PRIMARY KEY" if  is_key else ""}'
-         
-            case "int64":
-                return f'"{col}" BIGINT{" PRIMARY KEY" if  is_key else ""}'
-            case "float":
-                return f'"{col}" FLOAT'
-            case "float32":
-                return f'"{col}" FLOAT'
-            case "float64":
-                return f'"{col}" FLOAT'
+        if col_type in ("int", "int32", "int64"):
+            return f'"{col}" BIGINT{" PRIMARY KEY" if is_key else ""}'
+        elif col_type in ("float", "float32", "float64"):
+            return f'"{col}" FLOAT'
+        else:
+            # če ni ujemanj stolpec naredimo kar kot text
+            return f'"{col}" TEXT{" PRIMARY KEY" if  is_key else ""}'
         
-        # če ni ujemanj stolpec naredimo kar kot text
-        return f'"{col}" TEXT{" PRIMARY KEY" if  is_key else ""}'
+        
     
     def df_to_sql_create(self, df: DataFrame, name: str, add_serial=False, use_camel_case=True) -> str:
         """

@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Registracija</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="/static/css/kalkulator.css/">
+    </head>
+    <body>
+        <table>
+            <form action="/registriraj_se/">
+                <tr>
+                    <td colspan="2">
+                        <h1>Registracija</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Ime in priimek</h2>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="name" class= "my-input" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Uporabniško ime</h2>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="username1" class= "my-input" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Starost</h2>
+                    </td>
+                    <td>
+                        <input type="text" id="username" name="age" class= "my-input"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Spol</h2>
+                    </td>
+                    <td>
+                        <h3>Moški:</h3><input type="checkbox" id="username" name="gender" value="moški" class= "my-input" />
+                        <h3>Ženski:</h3> <input type="checkbox" id="username" name="gender" value="ženski" class= "my-input" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Geslo</h2>
+                    </td>
+                    <td>
+                        <input type="password" id="password" name="password" class= "your-input" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Potrdi geslo</h2>
+                    </td>
+                    <td>
+                        <input type="password" id="password" name="password1" class= "your-input" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input class="my-input" type="submit" value="Registracija"/>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </body>
+</html>

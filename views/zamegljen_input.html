@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator1</title>
+  <style>
+    /* Neobvezno: Dodatno oblikovanje za boljši videz */
+    .my-input-container {
+      position: relative;
+      display: inline-block;
+    }
+    .blur-text {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translate(0, -50%);
+      color: gray;
+    }
+  </style>
+  <script>
+    function handleInput(input) {
+      const blurText = "km"; // Beseda za prikazovanje v zamegljenem besedilu
+      const blurredInput = input + " " + blurText;
+      return blurredInput;
+    }
+  </script>
+</head>
+<body>
+  <div class="my-input-container">
+    <!-- Območje za vnos -->
+    <input type="text" id="distanceInput" oninput="updateBlurredInput()" />
+
+    <!-- Zamegljeno besedilo "km" -->
+    <span class="blur-text" id="blurText">km</span>
+  </div>
+
+  <script>
+    function updateBlurredInput() {
+      const inputElement = document.getElementById("distanceInput");
+      const blurTextElement = document.getElementById("blurText");
+      const inputValue = inputElement.value;
+      const blurredInput = handleInput(inputValue);
+      blurTextElement.textContent = blurredInput;
+    }
+
+    // Po želji lahko privzeto prikažete že zamegljeno besedilo
+    // na začetku, če ima polje za vnos že prednastavljeno vrednost.
+    updateBlurredInput();
+  </script>
+</body>
+</html>

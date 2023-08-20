@@ -4,7 +4,33 @@
         <meta charset="utf-8"/>
         <link rel="stylesheet" href="/static/css/kalkulator.css">
     </head>
+    <style>
+        .my-input-container {
+            position: relative;
+            display: inline-block;
+            width: 300px;
+            height: 80px;
+            font-size: 50px;
+            }
+        .blur-bracket {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            filter: blur(1px); /* Apply blur effect to the text */
+            }
+        .blur-text {
+            position: absolute;
+            font-size: 30px;
+            top: 50%;
+            right: 30px;
+            transform: translate(0, -50%);
+            color: gray;
+            }
+    </style>
     <body>
+        <form action="/preracunaj/">
         <table border="3" cellspacing="0" cellpading="0" width="60%" align="center">
             <tr>
                 <td colspan="2" align="center">
@@ -16,11 +42,66 @@
                     <h2>Pretečena razdalja</h2>
                 </td>
                 <td>
-                    <form>
-                        <input type="text" id="name" name="name" class= "my-input" />
-                    </form>
+                    <!-- Območje za vnos -->
+                    <span class="blur-bracket">
+                        <input class="my-input-container" type="text" id="pretecena" name='pretecena' oninput="updateBlurredInput()" />
+                        <span class="blur-text" id="blurText">km</span>
+                    </span>
+                    <!-- Zamegljeno besedilo "km" -->
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>Porabljen čas</h2>
+                </td>
+                <td>
+                    <!-- Območje za vnos -->
+                    <span class="blur-bracket">
+                        <input class="my-input-container" type="text" id="min" name="min" oninput="updateBlurredInput()"/>
+                    
+                        <!-- Zamegljeno besedilo "min" -->
+                        <span class="blur-text" id="blurText">min</span>
+                    </span>
+                    <span class="blur-bracket">
+                        <!-- Območje za vnos -->
+                        <input class="my-input-container" type="text" id="sek" name="sek" oninput="updateBlurredInput()"/>
+                    
+                        <!-- Zamegljeno besedilo "km" -->
+                        <span class="blur-text" id="blurText">sek</span>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>Nova razdalja</h2>
+                </td>
+                <td>
+                    <!-- Območje za vnos -->
+                    <span class="blur-bracket">
+                        <input class="my-input-container" type="text" id="zeljena" name="zeljena" oninput="updateBlurredInput()" />
+                    
+                        <!-- Zamegljeno besedilo "km" -->
+                        <span class="blur-text" id="blurText">km</span>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>Starost</h2>
+                </td>
+                <td>
+                    <span class="blur-bracket">
+                        <!-- Območje za vnos -->
+                        <input class="my-input-container" type="text" id="starost" name="starost" oninput="updateBlurredInput()"/>
+                    
+                        <!-- Zamegljeno besedilo "km" -->
+                        <span class="blur-text" id="blurText">let</span>
+                    </span>
+                    <input class="my-input" type="submit" value="Preračunaj"/>
                 </td>
             </tr>
         </table>
+    </form>
     </body>
 </html>
