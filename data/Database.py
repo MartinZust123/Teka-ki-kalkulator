@@ -22,8 +22,7 @@ TEK = TypeVar(
     Tek,
     Uporabnik,
     VrstaTeka,
-    Razdalja,
-    Cas
+    Tekmovanje
 )
 
 
@@ -146,7 +145,6 @@ class Repo:
             return f'"{col}" TEXT{" PRIMARY KEY" if  is_key else ""}'
         
         
-    
     def df_to_sql_create(self, df: DataFrame, name: str, add_serial=False, use_camel_case=True) -> str:
         """
         Funkcija ustvari in izvede sql stavek za create table na podlagi podanega pandas DataFrame-a. 
@@ -201,4 +199,18 @@ class Repo:
 
         # izvedemo ukaz
         self.cur.execute(sql_cmd)
-        self.conn.commit()
+        self.conn.commit() 
+
+    def dobi_maraton(self, typ: Type[TEK], leto, kraj, km, spol, take=50, skip=0) -> List[TEK]:
+        """ 
+        Prebere vrednosti v bazi za pretečena tekmovanja.
+        """
+        tbl_name = "oseba"
+        sql_cmd = f'''SELECT * FROM {tbl_name} 
+                      WHERE leto={leto}
+                      AND kraj={kraj}
+                      AND km={km}
+                      AND spol={spol}
+                      LIMIT {take} OFFSET {skip};'''
+        self.cur.execute(sql_cmd)
+        return [typ.from_dict(d) for d in self.cur.fetchall()]
