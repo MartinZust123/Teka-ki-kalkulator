@@ -64,6 +64,25 @@ def registriraj_se():
         return bottle.template("registracija1.html")
     else:
         return bottle.template("zacentna_stran.html", username= username1)
+    
+    #@post('/registracija')
+    #def registracija():
+    #    """
+    #    Če je registracija uspešna, uporabnika prijavi in ustvari piškotke.
+    #    """
+    #    username = str(request.forms.get('uporabnisko_ime'))
+    #    password = str(request.forms.get('geslo'))
+    #
+    #    if auth.dodaj_uporabnika(username,geslo):
+    #        prijava = auth.prijavi_uporabnika(username, geslo)
+    #    else:
+    #        return bottletext.template("registracija.tpl", napaka="Uporabnik s tem že obstaja")
+    #    
+    #    if prijava:
+    #        response.set_cookie("uporabnisko_ime", username)
+    #        response.set_cookie("id", str(prijava.id))
+    #
+    #        return redirect(url('nek url'))
 
 @bottle.get("/posodobi_profil/")
 def posodobi_profil():

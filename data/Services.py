@@ -38,7 +38,11 @@ class AuthService:
         
         return False
 
-    def dodaj_uporabnika(self, uporabnik: str, rola: str, geslo: str) -> UporabnikDto:
+
+   
+
+
+    def dodaj_uporabnika(self, username: str, geslo: str, spol: str, leto: int ) -> UporabnikDto:
 
         # zgradimo hash za geslo od uporabnika
 
@@ -54,12 +58,12 @@ class AuthService:
         # Sedaj ustvarimo objekt Uporabnik in ga zapišemo bazo
 
         uporabnik = Uporabnik(
-            username=uporabnik,
-            role=rola,
-            password_hash=password_hash.decode(),
-            last_login= date.today().isoformat()
+            username = username,
+            geslo_hash = password_hash.decode(),
+            spol= spol,
+            leto_rojstva = leto
         )
 
         self.repo.dodaj_gen(uporabnik, serial_col=None)
 
-        return UporabnikDto(uporabnisko_ime=uporabnik)
+        return UporabnikDto(username=username)

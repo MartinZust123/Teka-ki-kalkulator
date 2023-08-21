@@ -10,16 +10,15 @@ class RangTekaca:
 @dataclass_json
 @dataclass
 class Uporabnik:
-    uporabnisko_ime: str = field(default="")
+    id: int = 
+    username: str = field(default="")
     geslo_hash: str = field(default="")
     spol: str = field(default="")
     leto_rojstva: int = field(default=0)
-    rang_tekaca: RangTekaca = field(default="")
 
-#@dataclass_json
-#@dataclass
-#class UporabnikDto:
-#    uporabnisko_ime: str = field(default="")
+@dataclass
+class UporabnikDto:
+    username: str = field(default="")
 
 @dataclass_json
 @dataclass
