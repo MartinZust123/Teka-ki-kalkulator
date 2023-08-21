@@ -39,7 +39,7 @@ class AuthService:
         return False
 
 
-    def dodaj_uporabnika(self, username: str, geslo: str, spol: str, leto: int ) -> UporabnikDto:
+    def dodaj_uporabnika(self, username: str, ime: str, geslo: str, spol: str, leto: int ) -> UporabnikDto:
 
         # zgradimo hash za geslo od uporabnika
 
@@ -56,7 +56,8 @@ class AuthService:
 
         uporabnik = Uporabnik(
             username = username,
-            geslo_hash = password_hash.decode(),
+            geslo = password_hash.decode(),
+            imeinpriimek = ime,
             spol= spol,
             leto_rojstva = leto
         )

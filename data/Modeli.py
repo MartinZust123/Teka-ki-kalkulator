@@ -12,7 +12,8 @@ class RangTekaca:
 class Uporabnik:
     id: int = field(default=0)
     username: str = field(default="")
-    geslo_hash: str = field(default="")
+    imeinpriimek: str = field(default="")
+    geslo: str = field(default="")
     spol: str = field(default="")
     leto_rojstva: int = field(default=0)
 
@@ -74,8 +75,8 @@ class VrstaTeka:
 @dataclass
 class Tek:
     id: int = field(default=0)
-    tekac: Uporabnik = field(default="")
-    vrsta_teka: VrstaTeka = field(default="")
+    tekac: str = field(default="")
+    vrsta_teka: str = field(default="")
     razdalja: int = field(default=0)
     cas: int = field(default=0)
 

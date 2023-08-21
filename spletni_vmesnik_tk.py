@@ -1,20 +1,29 @@
-#import os
+import os
 #
-#from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
-#import bottle # naprej uporabljamo bottleext
+from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
+import bottle # naprej uporabljamo bottleext
 #
-#from data.Database import Repo
-#from data.Modeli import *
-#from data.Services import AuthService
-#from functools import wraps
+from data.Database import Repo
+from data.Modeli import *
+from data.Services import AuthService
+from functools import wraps
 #
-#SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
-#RELOADER = os.environ.get('BOTTLE_RELOADER', True)
-#DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
+SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
+RELOADER = os.environ.get('BOTTLE_RELOADER', True)
+DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
+
+repo = Repo()
+auth = AuthService(repo)
 #
-#repo = Repo()
-#auth = AuthService(repo)
-#
+
+
+import bottle
+import naiven_tekaski_kalkulator
+import running_calculator as rc
+from fetch_table_data import fetch_table_data
+
+
+
 #def cookie_required(f):
 #    """
 #    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
@@ -27,11 +36,6 @@
 #        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
 #
 #    return decorated
-import bottle
-import naiven_tekaski_kalkulator
-import running_calculator as rc
-from fetch_table_data import fetch_table_data
-
 
 @bottle.get("/")
 def prvi_zaslon():
@@ -54,35 +58,27 @@ def uredi_profil():
 
 @bottle.get("/registriraj_se/")
 def registriraj_se():
+    """ Če je registracija uspešna, uporabnika prijavi in ustvari piškotke. """
+
     geslo = bottle.request.query["password"]
     geslo1 = bottle.request.query["password1"]
     username1 = bottle.request.query["username1"]
     ime = bottle.request.query["name"]
     starost = bottle.request.query["age"]
     spol = bottle.request.query["gender"]
+
     if geslo != geslo1:
         return bottle.template("registracija1.html")
     else:
-        return bottle.template("zacentna_stran.html", username= username1)
-    
-    #@post('/registracija')
-    #def registracija():
-    #    """
-    #    Če je registracija uspešna, uporabnika prijavi in ustvari piškotke.
-    #    """
-    #    username = str(request.forms.get('uporabnisko_ime'))
-    #    password = str(request.forms.get('geslo'))
-    #
-    #    if auth.dodaj_uporabnika(username,geslo):
-    #        prijava = auth.prijavi_uporabnika(username, geslo)
-    #    else:
-    #        return bottletext.template("registracija.tpl", napaka="Uporabnik s tem že obstaja")
-    #    
-    #    if prijava:
-    #        response.set_cookie("uporabnisko_ime", username)
-    #        response.set_cookie("id", str(prijava.id))
-    #
-    #        return redirect(url('nek url'))
+        if auth.dodaj_uporabnika(username1, ime, geslo, spol, starost):
+            prijava = auth.prijavi_uporabnika(username1, geslo)
+        else:
+            return bottle.template("registracija1.html", napaka="Uporabnik s tem že obstaja")
+        
+        if prijava:
+            response.set_cookie("uporabnisko_ime", username1)
+            return redirect(url('zacetna_stran')) #na katero stran naj vrze po prijavi???
+
 
 @bottle.get("/posodobi_profil/")
 def posodobi_profil():
