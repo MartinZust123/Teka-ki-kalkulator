@@ -30,6 +30,7 @@
 import bottle
 import naiven_tekaski_kalkulator
 import running_calculator as rc
+from fetch_table_data import fetch_table_data
 
 
 @bottle.get("/")
@@ -79,6 +80,22 @@ def posodobi_profil():
 @bottle.get("/rezultati/")
 def rezultati_tekov():
     return bottle.template("rezultati.html")
+
+@bottle.get("/prikazi_rezultate/")
+def prikazi_rezultate():
+    maraton = bottle.request.query["maraton"]
+    if maraton == "mali_kraski_maraton":
+        maraton = "kraski"
+    razdalja = bottle.request.query["razdalja"]
+    letnica = bottle.request.query["letnica"]
+    spol = bottle.request.query["spol"]
+    if spol == "moški":
+        spol = "M"
+    else:
+        spol = "Z"
+    tabela = fetch_table_data(int(letnica), maraton, int(razdalja), spol)
+    return bottle.template("rezultati1.html", tabela=tabela)
+
 
 @bottle.get("/kalkulator/")
 def vrni_kalkulator():
