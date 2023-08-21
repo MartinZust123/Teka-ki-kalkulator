@@ -10,7 +10,7 @@ class RangTekaca:
 @dataclass_json
 @dataclass
 class Uporabnik:
-    id: int = 
+    id: int = field(default=0)
     username: str = field(default="")
     geslo_hash: str = field(default="")
     spol: str = field(default="")

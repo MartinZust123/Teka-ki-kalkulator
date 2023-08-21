@@ -32,14 +32,11 @@ class AuthService:
 
         if succ:
             # popravimo last login time
-            user.last_login = date.today().isoformat()
-            self.repo.posodobi_gen(user, id_col="username")
-            return UporabnikDto(username=user.username, role=user.role)
+            #user.last_login = date.today().isoformat()
+            #self.repo.posodobi_gen(user, id_col="username")
+            return UporabnikDto(username=user.username)
         
         return False
-
-
-   
 
 
     def dodaj_uporabnika(self, username: str, geslo: str, spol: str, leto: int ) -> UporabnikDto:
