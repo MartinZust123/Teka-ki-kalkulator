@@ -2,73 +2,91 @@
     <head>
         <title>Rezultati</title>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="static/css/tekaski.css">
+        <link rel="stylesheet" href="/static/css/kalkulator.css">
+        <style>
+            /* Add custom styles for the table */
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            table {
+                width: 60%;
+                height: 60%;
+                margin: 0;
+                padding: 0;
+                border-collapse: collapse;
+                table-layout: fixed;
+                border: 1px solid #ccc;
+            }
+            td {
+                padding: 20px;
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
     </head>
     <body>
-        <table border="0" cellspacing="0" cellpading="0" width="90%" align="center">
+        <table>
+            <form action="/prikazi_rezultate/">
             <tr>
-                <td colspan="4" align="center">
-                    <h1>Rezultati</h1>
+                <td>
+                <h2>
+                    <label for="maraton">Izberite maraton:</label>
+                    <select id="maraton" name="maraton" class="sel">
+                        <option value="mali_kraski_maraton">Mali Kraški maraton</option>
+                        <option value="ljubljanski_maraton">Ljubljanski maraton</option>
+                        <option value="blejska_desetka">Blejska desetka</option>
+                        <option value="kranjski_maraton">Kranjski maraton</option>
+                    </select>
+                </h2>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <h2>Kraški</h2>
-                </td>
-                <td>
-                    <h2>Blejski</h2>
-                </td>
-                <td>
-                    <h2>Ljubljanski</h2>
-                </td>
-                <td>
-                    <h2>Kranjski</h2>
+                <h2>
+                    <label for="maraton">Izberite razdaljo:</label>
+                    <select id="maraton" name="maraton" class="sel">
+                        <option value="desetka">10 km</option>
+                        <option value="polmaraton">21 km</option>
+                        <option value="maraton">42 km</option>
+                    </select>
+                    </h2>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form action="/kraski22_10m/">
-                        <input type="submit" value="Kraška 10ka, moški, 2022"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="/blejski22_10m/">
-                        <input type="submit" value="Nočna 10ka, moški, 2022"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="/ljub22_10m/">
-                        <input type="submit" value="Ljubljanski, 10km, moški, 2022"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="/kranj22_10m/">
-                        <input type="submit" value="Kranj, 10km, moški, 2022"/>
-                    </form>
+                <h2>
+                    <label for="maraton">Izberite leto:</label>
+                    <select id="maraton" name="maraton" class="sel">
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </h2>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <form action="/kraski22_10z/">
-                        <input type="submit" value="Kraška 10ka, ženske, 2022"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="/blejski22_10mz">
-                        <input type="submit" value="Nočna 10ka, ženske, 2022"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="/ljub22_10z/">
-                        <input type="submit" value="Ljubljanski, 10km, ženske, 2022"/>
-                    </form>
-                </td>
-                <td>
-                    <form action="/kranj22_10z/">
-                        <input type="submit" value="Kranj, 10km, ženske, 2022"/>
-                    </form>
+                <h2>
+                    <label for="maraton">Izberite spol:</label>
+                    <select id="maraton" name="maraton" class="sel">
+                        <option value="moški">moški</option>
+                        <option value="ženske">ženske</option>
+                    </select>
+                </h2>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <input class="my-input" type="submit" value="Prikaži"/>
+                </td>
+            </tr>
+            </form>
         </table>
     </body>
 </html>

@@ -1,36 +1,36 @@
-import os
-
-from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
-import bottle # naprej uporabljamo bottleext
-
-from data.Database import Repo
-from data.Modeli import *
-from data.Services import AuthService
-from functools import wraps
-
-SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
-RELOADER = os.environ.get('BOTTLE_RELOADER', True)
-DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
-
-repo = Repo()
-auth = AuthService(repo)
-
-def cookie_required(f):
-    """
-    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
-    """
-    @wraps(f)
-    def decorated( *args, **kwargs):
-        cookie = request.get_cookie("uporabnik")
-        if cookie:
-            return f(*args, **kwargs)
-        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
-
-    return decorated
+#import os
+#
+#from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
+#import bottle # naprej uporabljamo bottleext
+#
+#from data.Database import Repo
+#from data.Modeli import *
+#from data.Services import AuthService
+#from functools import wraps
+#
+#SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
+#RELOADER = os.environ.get('BOTTLE_RELOADER', True)
+#DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
+#
+#repo = Repo()
+#auth = AuthService(repo)
+#
+#def cookie_required(f):
+#    """
+#    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
+#    """
+#    @wraps(f)
+#    def decorated( *args, **kwargs):
+#        cookie = request.get_cookie("uporabnik")
+#        if cookie:
+#            return f(*args, **kwargs)
+#        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
+#
+#    return decorated
 import bottle
 import naiven_tekaski_kalkulator
 import running_calculator as rc
-# from model_tekaski import Parkirišče
+
 
 @bottle.get("/")
 def prvi_zaslon():
@@ -131,7 +131,7 @@ def preracunaj_get():
     sek = bottle.request.query["sek"]
     zeljena = bottle.request.query["zeljena"]
     starost = bottle.request.query["starost"]
-    cas = rc.running_calc(int(pretecena)*1000, round(int(minute)+(int(sek)/60)), int(zeljena)*1000, int(starost))
+    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
     #nove_min = int(cas // 1)
     #nove_sek = int(((cas - nove_min) * 60) // 1)
     return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
