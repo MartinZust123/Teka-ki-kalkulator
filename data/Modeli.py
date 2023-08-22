@@ -15,7 +15,7 @@ class Uporabnik:
     imeinpriimek: str = field(default="")
     geslo: str = field(default="")
     spol: str = field(default="")
-    leto_rojstva: int = field(default=0)
+    starost: int = field(default=0)
 
 @dataclass
 class UporabnikDto:
