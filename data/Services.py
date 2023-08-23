@@ -1,5 +1,8 @@
-from data.Database import Repo
-from data.Modeli import *
+from Database import Repo
+from Modeli import *
+
+#from data.Database import Repo
+#from data.Modeli import *
 from typing import Dict
 from re import sub
 import dataclasses
@@ -28,13 +31,13 @@ class AuthService:
 
         geslo_bytes = geslo.encode('utf-8')
         # Ustvarimo hash iz gesla, ki ga je vnesel uporabnik
-        succ = bcrypt.checkpw(geslo_bytes, user.password_hash.encode('utf-8'))
+        succ = bcrypt.checkpw(geslo_bytes, user.geslo.encode('utf-8'))
 
         if succ:
             # popravimo last login time
             #user.last_login = date.today().isoformat()
             #self.repo.posodobi_gen(user, id_col="username")
-            return UporabnikDto(username=user.username)
+            return UporabnikDto(username=user.username, id=user.id)
         
         return False
 
@@ -59,9 +62,9 @@ class AuthService:
             imeinpriimek = imeinpriimek,
             geslo = password_hash.decode(),
             spol= spol,
-            starost= date.today().year - leto
+            starost= leto
         )
 
-        self.repo.dodaj_gen(uporabnik, serial_col=None)
+        self.repo.dodaj_gen(uporabnik)
 
-        return UporabnikDto(username=username)
+        return UporabnikDto(username=username, id=uporabnik.id)

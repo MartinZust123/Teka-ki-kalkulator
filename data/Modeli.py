@@ -19,6 +19,7 @@ class Uporabnik:
 
 @dataclass
 class UporabnikDto:
+    id: int = field(default=0)
     username: str = field(default="")
 
 @dataclass_json

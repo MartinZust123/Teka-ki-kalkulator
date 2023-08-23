@@ -1,7 +1,7 @@
 import os
 
 from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
-import bottle # naprej uporabljamo bottleext
+import bottle 
 
 ##
 from data.Database import Repo
@@ -16,7 +16,6 @@ DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 repo = Repo()
 auth = AuthService(repo)
 
-import bottle
 import naiven_tekaski_kalkulator
 import running_calculator as rc
 from fetch_table_data import fetch_table_data
@@ -38,24 +37,24 @@ def cookie_required(f):
 
 #=================================================================================================#
 
-@bottle.get("/")
+@get("/")
 def prvi_zaslon():
     return bottle.template("zacetna_stran_tk.html")
 
-@bottle.get("/odjava/")
+@get("/odjava/")
 def prvi_zaslon():
     return bottle.template("zacetna_stran_tk.html")
 
 #=================================================================================================#
 
-@bottle.get("/prijava/")
+@get("/prijava/")
 def vrni_prijavo():
     return bottle.template("prijava.html")
 
-@bottle.post("/prijavi_se/")
+@post("/prijava/")
 def prijava():
-    username = bottle.request.query["username"]
-    geslo = bottle.request.query["password"]
+    username = bottle.request.forms.getunicode("username")
+    geslo = bottle.request.forms.getunicode("password")
 
     if not auth.obstaja_uporabnik(username):
         return template("views/registracija.html", napaka="Uporabnik s tem imenom ne obstaja")
@@ -64,25 +63,26 @@ def prijava():
 
     if prijava:
         bottle.response.set_cookie("uporabnisko_ime", username)
-        return redirect(url('zacetna_stran'))
+        return template("zacetna_stran.html", username=username)
     else:
         return template("prijava.html", napaka="Neuspešna prijava. Napačno geslo ali uporabniško ime.")
     
 
-@bottle.get("/registracija/")
+@get("/registracija/")
 def registracija():
     return bottle.template("registracija.html")
 
-@bottle.post("/registriraj_se/")
+@post("/registracija/")
 def registriraj_se():
     """ Če je registracija uspešna, uporabnika prijavi in ustvari piškotke. """
 
-    geslo = bottle.request.query["password"]
-    geslo1 = bottle.request.query["password1"]
-    username1 = bottle.request.query["username1"]
-    ime = bottle.request.query["name"]
-    starost = bottle.request.query["age"]
-    spol = bottle.request.query["gender"]
+    geslo = bottle.request.forms.getunicode("password")
+
+    geslo1 = bottle.request.forms.getunicode("password1")
+    username1 = bottle.request.forms.getunicode("username")
+    ime = bottle.request.forms.getunicode("name")
+    starost = bottle.request.forms.getunicode("age")
+    spol = bottle.request.forms.getunicode("gender")
 
     if geslo != geslo1:
         return bottle.template("registracija1.html")
@@ -94,45 +94,47 @@ def registriraj_se():
         
         if prijava:
             response.set_cookie("uporabnisko_ime", username1, "secret")
-            return redirect(url('zacetna_stran')) #na katero stran naj vrze po prijavi???
+            return template("zacetna_stran.html", username=username1)
+
         
 #=================================================================================================#
 
-@bottle.get("/uredi_profil/")
+@get("/uredi_profil/")
 #@cookie_required
 def uredi_profil():
-    ime = bottle.request.query["ime"]
-    priimek = bottle.request.query["priimek"]
-    starost = bottle.request.query["starost"]
+    ime = bottle.request.forms.getunicode("ime")
+    priimek = bottle.request.forms.getunicode("priimek")
+    starost = bottle.request.forms.getunicode("starost")
     return bottle.template("uredi_profil.html",ime=ime, priimek=priimek,starost=starost)
 
-@bottle.get("/posodobi_profil/")
+@get("/posodobi_profil/")
 #@cookie_required
 def posodobi_profil():
-    geslo = bottle.request.query["password"]
-    geslo1 = bottle.request.query["password1"]
-    username1 = bottle.request.query["username1"]
-    ime = bottle.request.query["name"]
-    starost = bottle.request.query["age"]
+    geslo = bottle.request.forms.getunicode("password")
+    geslo1 = bottle.request.forms.getunicode("password1")
+    username1 = bottle.request.forms.getunicode("username1")
+    ime = bottle.request.forms.getunicode("name")
+    starost = bottle.request.forms.getunicode("age")
     if geslo != geslo1:
         return bottle.template("registracija1.html")
     else:
-        return bottle.template("zacentna_stran.html", username= username1)
+        return bottle.template("zacetna_stran.html", username= username1)
 
-@bottle.get("/rezultati/")
+@get("/rezultati/")
 #@cookie_required
 def rezultati_tekov():
     return bottle.template("rezultati.html")
 
-@bottle.get("/tvoji_treningi/")
+@get("/tvoji_treningi/")
 def prikazi_treninge():
-    ime = bottle.request.query["ime"]
+    ime = bottle.request.forms.getunicode("ime")
+
     tabela = moji_treningi(ime)
     return bottle.template("rezultati1.html", tabela=tabela)
 
-@bottle.get("/prikazi_rezultate/")
+@get("/prikazi_rezultate/")
 def prikazi_rezultate():
-    maraton = bottle.request.query["maraton"]
+    maraton = bottle.request.forms.getunicode("maraton")
     if maraton == "mali_kraski_maraton":
         maraton = "kraski"
     elif maraton == "ljubljanski_maraton":
@@ -141,9 +143,9 @@ def prikazi_rezultate():
         maraton = "bled"
     else:
         maraton = "kranj"
-    razdalja = bottle.request.query["razdalja"]
-    letnica = bottle.request.query["letnica"]
-    spol = bottle.request.query["spol"]
+    razdalja = bottle.request.forms.getunicode("razdalja")
+    letnica = bottle.request.forms.getunicode("letnica")
+    spol = bottle.request.forms.getunicode("spol")
     if spol == "moški":
         spol = "M"
     else:
@@ -152,53 +154,53 @@ def prikazi_rezultate():
     return bottle.template("rezultati1.html", tabela=tabela)
 
 
-@bottle.get("/kalkulator/")
+@get("/kalkulator/")
 def vrni_kalkulator():
     return bottle.template("kalkulator.html")
 
-@bottle.get("/statistika/")
+@get("/statistika/")
 def vrni_statistiko():
     return bottle.template("statistika.html", ime="Ioann Stanković", starost="26", spol="moški")
 
-@bottle.get("/kraski22_10m/")
+@get("/kraski22_10m/")
 def kraski22_10():
     return bottle.template("2022_kraski_10_Mn.html")
 
-@bottle.get("/blejski22_10m/")
+@get("/blejski22_10m/")
 def blejski22_m():
     return bottle.template("2022_blejski_Mn.html")
 
-@bottle.get("/ljub22_10m/")
+@get("/ljub22_10m/")
 def ljubljanski22_m():
     return bottle.template("2022_ljubljanski_10_M.html")
 
-@bottle.get("/kranj22_10m/")
+@get("/kranj22_10m/")
 def kranjski22_10m():
     return bottle.template("2022_kranjski_10_Mn.html")
 
-@bottle.get("/kraski22_10z/")
+@get("/kraski22_10z/")
 def kraski22_10z():
     return bottle.template("2022_kraski_10_Z.html")
 
-@bottle.get("/blejski22_10z/")
+@get("/blejski22_10z/")
 def blejski22_m():
     return bottle.template("2019_nocna_10_Z.html")
 
-@bottle.get("/ljub22_10z/")
+@get("/ljub22_10z/")
 def ljubljanski22_m():
     return bottle.template("2021_ljubljanski_10_Z.html")
 
-@bottle.get("/kranj22_10z/")
+@get("/kranj22_10z/")
 def kranjski22_10m():
     return bottle.template("2022_kranj_10_Z.html")
 
-@bottle.get("/preracunaj/")
+@get("/preracunaj/")
 def preracunaj_get():
-    pretecena = bottle.request.query["pretecena"]
-    minute = bottle.request.query["min"]
-    sek = bottle.request.query["sek"]
-    zeljena = bottle.request.query["zeljena"]
-    starost = bottle.request.query["starost"]
+    pretecena = bottle.request.forms.getunicode("pretecena")
+    minute = bottle.request.forms.getunicode("min")
+    sek = bottle.request.forms.getunicode("sek")
+    zeljena = bottle.request.forms.getunicode("zeljena")
+    starost = bottle.request.forms.getunicode("starost")
     cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
     #nove_min = int(cas // 1)
     #nove_sek = int(((cas - nove_min) * 60) // 1)
