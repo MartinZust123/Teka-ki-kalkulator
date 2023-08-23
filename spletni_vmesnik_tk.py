@@ -2,7 +2,7 @@ import os
 #
 from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
 import bottle # naprej uporabljamo bottleext
-#
+##
 from data.Database import Repo
 from data.Modeli import *
 from data.Services import AuthService
@@ -14,7 +14,7 @@ DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 
 repo = Repo()
 auth = AuthService(repo)
-#
+##
 
 
 import bottle

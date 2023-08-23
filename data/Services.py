@@ -4,7 +4,7 @@ from typing import Dict
 from re import sub
 import dataclasses
 import bcrypt
-from typing import Type
+from typing import Type, Union
 from datetime import date
 
 class AuthService:
@@ -21,7 +21,7 @@ class AuthService:
         except:
             return False
 
-    def prijavi_uporabnika(self, uporabnik : str, geslo: str) -> UporabnikDto | bool :
+    def prijavi_uporabnika(self, uporabnik : str, geslo: str) -> Union[UporabnikDto,bool] :
 
         # Najprej dobimo uporabnika iz baze
         user = self.repo.dobi_gen_id(Uporabnik, uporabnik, id_col="username")
