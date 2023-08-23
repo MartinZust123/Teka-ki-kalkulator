@@ -124,11 +124,23 @@ def posodobi_profil():
 def rezultati_tekov():
     return bottle.template("rezultati.html")
 
+@bottle.get("/tvoji_treningi/")
+def prikazi_treninge():
+    ime = bottle.request.query["ime"]
+    tabela = moji_treningi(ime)
+    return bottle.template("rezultati1.html", tabela=tabela)
+
 @bottle.get("/prikazi_rezultate/")
 def prikazi_rezultate():
     maraton = bottle.request.query["maraton"]
     if maraton == "mali_kraski_maraton":
         maraton = "kraski"
+    elif maraton == "ljubljanski_maraton":
+        maraton = "ljubljanski"
+    elif maraton == "blejska_desetka":
+        maraton = "bled"
+    else:
+        maraton = "kranj"
     razdalja = bottle.request.query["razdalja"]
     letnica = bottle.request.query["letnica"]
     spol = bottle.request.query["spol"]
@@ -146,7 +158,7 @@ def vrni_kalkulator():
 
 @bottle.get("/statistika/")
 def vrni_statistiko():
-    return bottle.template("statistika.html", ime="Ioann", priimek="Stanković", starost="26", spol="moški")
+    return bottle.template("statistika.html", ime="Ioann Stanković", starost="26", spol="moški")
 
 @bottle.get("/kraski22_10m/")
 def kraski22_10():
