@@ -1,0 +1,9 @@
+psycopg2
+pandas
+bottle
+datetime
+functools
+typing
+dataclasses-json
+bcrypt
+jupyter-server-proxy

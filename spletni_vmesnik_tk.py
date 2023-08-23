@@ -1,41 +1,42 @@
 import os
-#
+
 from bottleext import get, post, run, request, template, redirect, static_file, url, response#, template_user
 import bottle # naprej uporabljamo bottleext
+
 ##
 from data.Database import Repo
 from data.Modeli import *
 from data.Services import AuthService
 from functools import wraps
-#
+
 SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
 RELOADER = os.environ.get('BOTTLE_RELOADER', True)
 DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 
 repo = Repo()
 auth = AuthService(repo)
-##
-
 
 import bottle
 import naiven_tekaski_kalkulator
 import running_calculator as rc
 from fetch_table_data import fetch_table_data
 
+#=================================================================================================#
 
+def cookie_required(f):
+    """
+    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
+    """
+    @wraps(f)
+    def decorated( *args, **kwargs):
+        cookie = request.get_cookie("uporabnik")
+        if cookie:
+            return f(*args, **kwargs)
+        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
 
-#def cookie_required(f):
-#    """
-#    Dekorator, ki zahteva veljaven piškotek. Če piškotka ni, uporabnika preusmeri na stran za prijavo.
-#    """
-#    @wraps(f)
-#    def decorated( *args, **kwargs):
-#        cookie = request.get_cookie("uporabnik")
-#        if cookie:
-#            return f(*args, **kwargs)
-#        return template("prijava.html", uporabnik=None, napaka="Potrebna je prijava!")
-#
-#    return decorated
+    return decorated
+
+#=================================================================================================#
 
 @bottle.get("/")
 def prvi_zaslon():
@@ -45,18 +46,34 @@ def prvi_zaslon():
 def prvi_zaslon():
     return bottle.template("zacetna_stran_tk.html")
 
+#=================================================================================================#
+
+@bottle.get("/prijava/")
+def vrni_prijavo():
+    return bottle.template("prijava.html")
+
+@bottle.post("/prijavi_se/")
+def prijava():
+    username = bottle.request.query["username"]
+    geslo = bottle.request.query["password"]
+
+    if not auth.obstaja_uporabnik(username):
+        return template("views/registracija.html", napaka="Uporabnik s tem imenom ne obstaja")
+
+    prijava = auth.prijavi_uporabnika(username, geslo)
+
+    if prijava:
+        bottle.response.set_cookie("uporabnisko_ime", username)
+        return redirect(url('zacetna_stran'))
+    else:
+        return template("prijava.html", napaka="Neuspešna prijava. Napačno geslo ali uporabniško ime.")
+    
+
 @bottle.get("/registracija/")
 def registracija():
     return bottle.template("registracija.html")
 
-@bottle.get("/uredi_profil/")
-def uredi_profil():
-    ime = bottle.request.query["ime"]
-    priimek = bottle.request.query["priimek"]
-    starost = bottle.request.query["starost"]
-    return bottle.template("uredi_profil.html",ime=ime, priimek=priimek,starost=starost)
-
-@bottle.get("/registriraj_se/")
+@bottle.post("/registriraj_se/")
 def registriraj_se():
     """ Če je registracija uspešna, uporabnika prijavi in ustvari piškotke. """
 
@@ -76,11 +93,21 @@ def registriraj_se():
             return bottle.template("registracija1.html", napaka="Uporabnik s tem že obstaja")
         
         if prijava:
-            response.set_cookie("uporabnisko_ime", username1)
+            response.set_cookie("uporabnisko_ime", username1, "secret")
             return redirect(url('zacetna_stran')) #na katero stran naj vrze po prijavi???
+        
+#=================================================================================================#
 
+@bottle.get("/uredi_profil/")
+#@cookie_required
+def uredi_profil():
+    ime = bottle.request.query["ime"]
+    priimek = bottle.request.query["priimek"]
+    starost = bottle.request.query["starost"]
+    return bottle.template("uredi_profil.html",ime=ime, priimek=priimek,starost=starost)
 
 @bottle.get("/posodobi_profil/")
+#@cookie_required
 def posodobi_profil():
     geslo = bottle.request.query["password"]
     geslo1 = bottle.request.query["password1"]
@@ -93,6 +120,7 @@ def posodobi_profil():
         return bottle.template("zacentna_stran.html", username= username1)
 
 @bottle.get("/rezultati/")
+#@cookie_required
 def rezultati_tekov():
     return bottle.template("rezultati.html")
 
@@ -115,10 +143,6 @@ def prikazi_rezultate():
 @bottle.get("/kalkulator/")
 def vrni_kalkulator():
     return bottle.template("kalkulator.html")
-
-@bottle.get("/prijava/")
-def vrni_prijavo():
-    return bottle.template("prijava.html")
 
 @bottle.get("/statistika/")
 def vrni_statistiko():
@@ -168,10 +192,7 @@ def preracunaj_get():
     #nove_sek = int(((cas - nove_min) * 60) // 1)
     return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
 
-@bottle.get("/prijavi_se/")
-def prijavi_se():
-    username = bottle.request.query["username"]
-    return bottle.template("zacentna_stran.html", username = username)
+
 
 @bottle.get("/static/<filepath:path>")
 def vrni_staticno_datoteko(filepath):
