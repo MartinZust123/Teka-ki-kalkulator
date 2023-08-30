@@ -61,6 +61,15 @@ class Repo:
     
         return typ.from_dict(d)
     
+    def dobi_vse_gen_id(self, typ: Type[TEK], id: Union[int, str], id_col = "id") -> TEK:
+        """
+        Generična metoda, ki vrne vse dataclass objekte pridobljen iz baze na podlagi njegovega idja.
+        """
+        tbl_name = typ.__name__
+        sql_cmd = f'SELECT * FROM {tbl_name} WHERE {id_col} = %s';
+        self.cur.execute(sql_cmd, (id,))    
+        return [typ.from_dict(s) for s in self.cur.fetchall()]
+    
     def izbrisi_gen(self,  typ: Type[TEK], id: Union[int,str], id_col = "id"):
         """
         Generična metoda, ki vrne dataclass objekt pridobljen iz baze na podlagi njegovega idja.

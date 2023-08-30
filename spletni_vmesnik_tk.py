@@ -20,7 +20,13 @@ import naiven_tekaski_kalkulator
 import running_calculator as rc
 from fetch_table_data import fetch_table_data
 
-#=================================================================================================#
+#= STATIČNE DATOTEKE =============================================================================#
+
+@bottle.get("/static/<filepath:path>")
+def vrni_staticno_datoteko(filepath):
+    return bottle.static_file(filepath, 'static')
+
+#= PIŠKOTKI ======================================================================================#
 
 def cookie_required(f):
     """
@@ -35,7 +41,7 @@ def cookie_required(f):
 
     return decorated
 
-#=================================================================================================#
+#= PRVA STRAN ====================================================================================#
 
 @get("/")
 def prvi_zaslon():
@@ -45,7 +51,7 @@ def prvi_zaslon():
 def prvi_zaslon():
     return bottle.template("zacetna_stran_tk.html")
 
-#=================================================================================================#
+#= PRIJAVA =======================================================================================#
 
 @get("/prijava/")
 def vrni_prijavo():
@@ -97,7 +103,7 @@ def registriraj_se():
             return template("zacetna_stran.html", username=username1)
 
         
-#=================================================================================================#
+#= UREJANJE PROFILA ==============================================================================#
 
 @get("/uredi_profil/")
 #@cookie_required
@@ -119,18 +125,12 @@ def posodobi_profil():
         return bottle.template("registracija1.html")
     else:
         return bottle.template("zacetna_stran.html", username= username1)
+    
+#= REZULTATI PRETEKLIH TEKMOVANJ =================================================================#
 
 @get("/rezultati/")
-#@cookie_required
 def rezultati_tekov():
     return bottle.template("rezultati.html")
-
-@get("/tvoji_treningi/")
-def prikazi_treninge():
-    ime = bottle.request.forms.getunicode("ime")
-
-    tabela = moji_treningi(ime)
-    return bottle.template("rezultati1.html", tabela=tabela)
 
 @get("/prikazi_rezultate/")
 def prikazi_rezultate():
@@ -153,14 +153,48 @@ def prikazi_rezultate():
     tabela = fetch_table_data(int(letnica), maraton, int(razdalja), spol)
     return bottle.template("rezultati1.html", tabela=tabela)
 
+#= TVOJA STATISTIKA ==============================================================================#
+
+@get("/tvoji_treningi/")
+#@cookie_required
+def prikazi_treninge():
+
+    uporabnik = bottle.request.get_cookie("uporabnik")
+    teki = Repo.dobi_vse_gen_id(Tek, uporabnik, "uporabnik")
+
+    return bottle.template("rezultati1.html", tabela=teki)
+
+#    ime = bottle.request.forms.getunicode("ime")
+#
+#    tabela = moji_treningi(ime)
+#    return bottle.template("rezultati1.html", tabela=tabela)
+
+@get("/statistika/")
+def vrni_statistiko():
+    uporabnik = bottle.request.get_cookie("uporabnik")
+    ime = uporabnik.imeinpriimek
+    starost = ""
+    spol = ""
+    return bottle.template("statistika.html", ime="Ioann Stanković", starost="26", spol="moški")
+
+#= TEKAŠKI KALKULATOR ============================================================================#
 
 @get("/kalkulator/")
 def vrni_kalkulator():
     return bottle.template("kalkulator.html")
 
-@get("/statistika/")
-def vrni_statistiko():
-    return bottle.template("statistika.html", ime="Ioann Stanković", starost="26", spol="moški")
+@get("/preracunaj/")
+def preracunaj_get():
+    pretecena = bottle.request.forms.getunicode("pretecena")
+    minute = bottle.request.forms.getunicode("min")
+    sek = bottle.request.forms.getunicode("sek")
+    zeljena = bottle.request.forms.getunicode("zeljena")
+    starost = bottle.request.forms.getunicode("starost")
+    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
+    #nove_min = int(cas // 1)
+    #nove_sek = int(((cas - nove_min) * 60) // 1)
+    return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
+
 
 @get("/kraski22_10m/")
 def kraski22_10():
@@ -193,23 +227,5 @@ def ljubljanski22_m():
 @get("/kranj22_10z/")
 def kranjski22_10m():
     return bottle.template("2022_kranj_10_Z.html")
-
-@get("/preracunaj/")
-def preracunaj_get():
-    pretecena = bottle.request.forms.getunicode("pretecena")
-    minute = bottle.request.forms.getunicode("min")
-    sek = bottle.request.forms.getunicode("sek")
-    zeljena = bottle.request.forms.getunicode("zeljena")
-    starost = bottle.request.forms.getunicode("starost")
-    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
-    #nove_min = int(cas // 1)
-    #nove_sek = int(((cas - nove_min) * 60) // 1)
-    return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
-
-
-
-@bottle.get("/static/<filepath:path>")
-def vrni_staticno_datoteko(filepath):
-    return bottle.static_file(filepath, 'static')
 
 bottle.run(reloader=True)
