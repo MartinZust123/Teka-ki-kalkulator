@@ -5,10 +5,8 @@ import os
 from re import sub
 
 from typing import List, TypeVar, Type, Callable, Any, Union
-#import data.auth_public as auth
-#from data.Modeli import *
-import auth_public as auth
-from Modeli import *
+import data.auth_public as auth
+from data.Modeli import *
 
 from pandas import DataFrame
 
@@ -24,7 +22,6 @@ TEK = TypeVar(
     "TEK",
     Tek,
     Uporabnik,
-    VrstaTeka,
     Tekmovanje
 )
 
