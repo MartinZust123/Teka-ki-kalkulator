@@ -30,11 +30,9 @@
 <table>
 % for vrstica in tabela: 
     <tr>
-    %for e in vrstica:
-    <td>
-        <h3>{{ e }}</h3>
-    </td>
-    %end
+        %for e in vrstica:
+        <td>{{ e }}</td>
+        %end
     </tr> 
 %end
 </table>

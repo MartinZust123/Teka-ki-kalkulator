@@ -161,7 +161,7 @@ def prikazi_rezultate():
     else:
         spol = "Z"
 
-    tabela = Repo.dobi_maraton(typ=Tekmovanje, leto=letnica, kraj=maraton, km=razdalja, spol=spol)
+    tabela = repo.dobi_maraton(Oseba, letnica, maraton, razdalja, spol)
 
 #    tabela = fetch_table_data(int(letnica), maraton, int(razdalja), spol)
     return bottle.template("rezultati1.html", tabela=tabela)

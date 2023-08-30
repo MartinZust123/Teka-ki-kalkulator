@@ -24,8 +24,7 @@ class UporabnikDto:
 
 @dataclass_json
 @dataclass
-class Tekmovanje:
-    # drugi classi za čas? 
+class Oseba: # popravi nazaj na Tekmovanje, ko dobis permission
     id: int = field(default=0)
     spol: str = field(default="")
     priimekinime: str = field(default="")
@@ -82,18 +81,3 @@ class Tek:
     razdalja: int = field(default=0)
     cas: int = field(default=0)
 
-#@dataclass_json
-#@dataclass
-#class Tekmovanje:
-#    id: int = field(default=0)
-#    naziv: str = field(default="")
-#    leto: int = field(default=0)
-#    razdalja: int = field(default="")
-
-#@dataclass_json
-#@dataclass
-#class Rezultat:
-#    id: int = field(default=0)
-#    tekmovanje: Tekmovanje = field(default="")
-#    priimek_ime: str = field(default="")
-#    rezultat: str = field(default="")

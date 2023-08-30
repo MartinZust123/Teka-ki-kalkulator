@@ -22,7 +22,8 @@ TEK = TypeVar(
     "TEK",
     Tek,
     Uporabnik,
-    Tekmovanje
+#    Tekmovanje,
+    Oseba
 )
 
 
