@@ -28,19 +28,31 @@
     </style>
 </head>
 
-<!--za sestavit tabelo-->
+
+<form method="post" action="/tvoji_treningi/">
+    <label>Datum:</label><br>
+    <input type="text" id="name" name="datum"><br>
+    <label>Razdalja (v m):</label><br>
+    <input type="text" id="name" name="razdalja"><br>
+    <label>Čas (v min):</label><br>
+    <input type="text" id="name" name="cas"><br>
+
+    <input type="submit" value="Submit">
+</form>
 
 <table>
-% for vrstica in tabela: 
-
-
     <tr>
-    %for e in vrstica:
-    <td>
-        <h3>{{ e }}</h3>
-    </td>
+      <th>Datum</th>
+      <th>Razdalja</th>
+      <th>Čas</th>
+    </tr>
+    % for l in tabela:
+    <tr>
+      <td>{{l.datum}}</td>
+      <td>{{l.razdalja}}</td>
+      <td>{{l.cas}}</td>
+    </tr>
     %end
-    </tr> 
-%end
-</table>
+  </table>
+
 </html>
