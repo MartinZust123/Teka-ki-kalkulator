@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 
-@dataclass_json
-@dataclass
-class RangTekaca:
-    id: int = field(default=0)
-    rang: str = field(default="")
+#@dataclass_json
+#@dataclass
+#class RangTekaca:
+#    id: int = field(default=0)
+#    rang: str = field(default="")
 
 @dataclass_json
 @dataclass
@@ -66,18 +66,19 @@ class Tekmovanje:
 #    razdalja: int = field(default=0)
 #    izbrano: bool = field(default=False)
 
-@dataclass_json
-@dataclass
-class VrstaTeka:
-    id: int = field(default=0)
-    vrsta: str = field(default="")
+#@dataclass_json
+#@dataclass
+#class VrstaTeka:
+#    id: int = field(default=0)
+#    vrsta: str = field(default="")
 
 @dataclass_json
 @dataclass
 class Tek:
     id: int = field(default=0)
     tekac: str = field(default="")
-    vrsta_teka: str = field(default="")
+    datum: str = field(default="")
+#    vrsta_teka: str = field(default="")
     razdalja: int = field(default=0)
     cas: int = field(default=0)
 

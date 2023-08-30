@@ -206,3 +206,12 @@ GRANT all
  GRANT all
     ON utezi
     TO matejg;
+
+
+CREATE TABLE Oseba (
+    ID SERIAL PRIMARY KEY,
+    Spol CHAR(1) CHECK (Spol IN ('Z', 'M')),
+    PriimekInIme VARCHAR(100),
+
+    -- Add more columns as needed
+);

@@ -1,8 +1,5 @@
-from Database import Repo
-from Modeli import *
-
-#from data.Database import Repo
-#from data.Modeli import *
+from data.Database import Repo
+from data.Modeli import *
 from typing import Dict
 from re import sub
 import dataclasses
