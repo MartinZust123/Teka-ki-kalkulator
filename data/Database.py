@@ -210,16 +210,16 @@ class Repo:
         self.cur.execute(sql_cmd)
         self.conn.commit() 
 
-    def dobi_maraton(self, typ: Type[TEK], leto, kraj, km, spol, take=50, skip=0) -> List[TEK]:
+    def dobi_maraton(self, typ: Type[TEK], leto, kraj, km, spol, skip=0) -> List[TEK]:
         """ 
         Prebere vrednosti v bazi za pretečena tekmovanja.
         """
-        tbl_name = type(typ).__name__
+        tbl_name = "rezultat"
         sql_cmd = f'''SELECT * FROM {tbl_name} 
                       WHERE leto={leto}
                       AND kraj={kraj}
                       AND km={km}
                       AND spol={spol}
-                      LIMIT {take} OFFSET {skip};'''
+                      OFFSET {skip};'''
         self.cur.execute(sql_cmd)
         return [typ.from_dict(d) for d in self.cur.fetchall()]

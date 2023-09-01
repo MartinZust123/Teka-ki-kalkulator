@@ -155,16 +155,25 @@ def prikazi_rezultate():
         maraton = "kranj"
     # nocni manjka
 
-    razdalja = bottle.request.forms.getunicode("razdalja")
-    letnica = bottle.request.forms.getunicode("letnica")
+    # razdalje in letnice ne prebere pravilno !!!
+    razdalja = int(bottle.request.forms.getunicode("razdalja"))
+    letnica = int(bottle.request.forms.getunicode("letnica"))
     spol = bottle.request.forms.getunicode("spol")
 
     if spol == "moški":
         spol = "M"
     else:
         spol = "Z"
+    
+    print(letnica)
+    print(razdalja)
+    print(maraton)
+    print(spol)
 
     tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
+    print(tabela)
+
+    
 
 #    tabela = fetch_table_data(int(letnica), maraton, int(razdalja), spol)
     return bottle.template("rezultati1.html", tabela=tabela)
@@ -172,16 +181,15 @@ def prikazi_rezultate():
 #= TVOJA STATISTIKA ==============================================================================#
 
 @get("/statistika/")
-#@cookie_required
+@cookie_required
 def vrni_statistiko():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
-    print(uporabnik) ###pobrisi
     u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
     return bottle.template("statistika.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
 #    return bottle.template("statistika.html", ime="Ioann Stanković", starost="26", spol="moški")
 
 @get("/tvoji_treningi/")
-#@cookie_required
+@cookie_required
 def prikazi_treninge():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
 
@@ -195,7 +203,9 @@ def vnesi_trening():
 
     datum = bottle.request.forms.getunicode("datum")
     razdalja = bottle.request.forms.getunicode("razdalja")
-    cas = bottle.request.forms.getunicode("cas")
+    min = int(bottle.request.forms.getunicode("cas_min"))
+    sek = int(bottle.request.forms.getunicode("cas_sek"))
+    cas = min*60 + sek
 
     trening = Tek(
         tekac=uporabnik,
