@@ -69,7 +69,7 @@ def prijava():
     geslo = bottle.request.forms.getunicode("password")
 
     if not auth.obstaja_uporabnik(username):
-        return template("views/registracija.html", napaka="Uporabnik s tem imenom ne obstaja")
+        return template("registracija.html", napaka="Uporabnik s tem imenom ne obstaja")
 
     prijava = auth.prijavi_uporabnika(username, geslo)
 
@@ -98,13 +98,15 @@ def registriraj_se():
     starost = bottle.request.forms.getunicode("age")
     spol = bottle.request.forms.getunicode("gender")
 
+    
     if geslo != geslo1:
-        return bottle.template("registracija1.html")
+        return bottle.template("registracija.html", napaka="Gesli se ne ujemata")
     else:
+        print(Uporabnik("", username, ime, geslo, spol, starost))
         if auth.dodaj_uporabnika(username, ime, geslo, spol, starost):
             prijava = auth.prijavi_uporabnika(username, geslo)
         else:
-            return bottle.template("registracija1.html", napaka="Uporabnik s tem uporabniškim imenom že obstaja")
+            return bottle.template("registracija.html", napaka="Uporabnik s tem uporabniškim imenom že obstaja")
         
         if prijava:
             response.set_cookie("uporabnisko_ime", username, path="/")
@@ -151,6 +153,7 @@ def prikazi_rezultate():
         maraton = "bled"
     else:
         maraton = "kranj"
+    # nocni manjka
 
     razdalja = bottle.request.forms.getunicode("razdalja")
     letnica = bottle.request.forms.getunicode("letnica")
@@ -161,7 +164,7 @@ def prikazi_rezultate():
     else:
         spol = "Z"
 
-    tabela = repo.dobi_maraton(Oseba, letnica, maraton, razdalja, spol)
+    tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
 
 #    tabela = fetch_table_data(int(letnica), maraton, int(razdalja), spol)
     return bottle.template("rezultati1.html", tabela=tabela)
@@ -222,38 +225,5 @@ def preracunaj_get():
     #nove_min = int(cas // 1)
     #nove_sek = int(((cas - nove_min) * 60) // 1)
     return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
-
-
-@get("/kraski22_10m/")
-def kraski22_10():
-    return bottle.template("2022_kraski_10_Mn.html")
-
-@get("/blejski22_10m/")
-def blejski22_m():
-    return bottle.template("2022_blejski_Mn.html")
-
-@get("/ljub22_10m/")
-def ljubljanski22_m():
-    return bottle.template("2022_ljubljanski_10_M.html")
-
-@get("/kranj22_10m/")
-def kranjski22_10m():
-    return bottle.template("2022_kranjski_10_Mn.html")
-
-@get("/kraski22_10z/")
-def kraski22_10z():
-    return bottle.template("2022_kraski_10_Z.html")
-
-@get("/blejski22_10z/")
-def blejski22_m():
-    return bottle.template("2019_nocna_10_Z.html")
-
-@get("/ljub22_10z/")
-def ljubljanski22_m():
-    return bottle.template("2021_ljubljanski_10_Z.html")
-
-@get("/kranj22_10z/")
-def kranjski22_10m():
-    return bottle.template("2022_kranj_10_Z.html")
 
 bottle.run(reloader=True)
