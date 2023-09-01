@@ -25,21 +25,92 @@
             text-align: center;
             vertical-align: middle;
         }
+        .stacked-divs {
+            display: block;
+            margin-bottom: 20px; 
+        } 
+        .my-input-container {
+            position: relative;
+            display: inline-block;
+            width: 300px;
+            height: 80px;
+            font-size: 50px;
+            }
+        .blur-bracket {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            filter: blur(1px); /* Apply blur effect to the text */
+            }
+        .blur-text {
+            position: absolute;
+            font-size: 30px;
+            top: 50%;
+            right: 30px;
+            transform: translate(0, -50%);
+            color: gray;
+            }
     </style>
 </head>
 
-
+<div class="stacked-divs">
 <form method="post" action="/tvoji_treningi/">
-    <label>Datum:</label><br>
-    <input type="text" id="name" name="datum"><br>
-    <label>Razdalja (v m):</label><br>
-    <input type="text" id="name" name="razdalja"><br>
-    <label>Čas (v min):</label><br>
-    <input type="text" id="name" name="cas"><br>
-
-    <input type="submit" value="Submit">
+    <table border="3" cellspacing="0" cellpading="0" width="60%" align="center">
+        <tr>
+            <td colspan="2" align="center">
+                <h1>Vnesi nov tek</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>Datum (llll-mm-dd):</h2>
+            </td>
+            <td>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="text" id="datum" name='datum' oninput="updateBlurredInput()" />
+                </span> 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>Razdalja</h2>
+            </td>
+            <td>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="text" id="zeljena" name="zeljena" oninput="updateBlurredInput()" />
+                    <span class="blur-text" id="blurText">m</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h2>Porabljen čas</h2>
+            </td>
+            <td>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="text" id="cas_min" name="cas_min" oninput="updateBlurredInput()"/>
+                    <span class="blur-text" id="blurText">min</span>
+                </span>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="text" id="cas_sek" name="cas_sek" oninput="updateBlurredInput()"/>
+                    <span class="blur-text" id="blurText">sek</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input class="my-input" type="submit" value="Vnesi"/>
+            </td>
+        </tr>
+    </table>
 </form>
+</div>
 
+
+<div class=" stacked-divs">
 <table>
     <tr>
       <th>Datum</th>
@@ -53,6 +124,8 @@
       <td>{{l.cas}}</td>
     </tr>
     %end
-  </table>
+</table>
+</div>
+
 
 </html>
