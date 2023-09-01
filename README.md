@@ -15,7 +15,7 @@ Rezultati tekmovanj so pridobljeni s strani [Timing Ljubljana](https://timinglju
 
 
 [Lucidchart tabela](https://lucid.app/lucidchart/a1b93589-db0d-476b-b64e-1dca6335c181/view?page=0_0&invitationId=inv_a6e119e3-ad27-4a2f-8fc3-8bc244ec5d4e#)
-![alt text](https://github.com/MartinZust123/Tekaski-kalkulator/blob/main/Tree%20diagrams.png)
+![alt text](https://github.com/MartinZust123/Tekaski-kalkulator/blob/main/er_diagram.png)
 
 ## Spletni dostop
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/MartinZust123/Tekaski-kalkulator/main?urlpath=proxy%2F8080)  Aplikacija `bottle.py`
