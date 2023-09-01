@@ -1,12 +1,6 @@
 from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json
 
-#@dataclass_json
-#@dataclass
-#class RangTekaca:
-#    id: int = field(default=0)
-#    rang: str = field(default="")
-
 @dataclass_json
 @dataclass
 class Uporabnik:
@@ -17,6 +11,7 @@ class Uporabnik:
     spol: str = field(default="")
     starost: int = field(default=0)
 
+@dataclass_json
 @dataclass
 class UporabnikDto:
     id: int = field(default=0)
@@ -24,7 +19,7 @@ class UporabnikDto:
 
 @dataclass_json
 @dataclass
-class Oseba: # popravi nazaj na Tekmovanje, ko dobis permission
+class Rezultat: 
     id: int = field(default=0)
     spol: str = field(default="")
     priimekinime: str = field(default="")
@@ -51,25 +46,6 @@ class Oseba: # popravi nazaj na Tekmovanje, ko dobis permission
     km_stirideset: str = field(default="")
     km_maraton: str = field(default="")
     km_dva: str = field(default="")
-
-
-#@dataclass_json
-#@dataclass
-#class Cas:
-#    cas: str = field(default=0)
-#    izbrano: bool = field(default=False)
-
-#@dataclass_json
-#@dataclass
-#class Razdalja:
-#    razdalja: int = field(default=0)
-#    izbrano: bool = field(default=False)
-
-#@dataclass_json
-#@dataclass
-#class VrstaTeka:
-#    id: int = field(default=0)
-#    vrsta: str = field(default="")
 
 @dataclass_json
 @dataclass

@@ -22,8 +22,7 @@ TEK = TypeVar(
     "TEK",
     Tek,
     Uporabnik,
-#    Tekmovanje,
-    Oseba
+    Rezultat
 )
 
 
@@ -215,7 +214,7 @@ class Repo:
         """ 
         Prebere vrednosti v bazi za pretečena tekmovanja.
         """
-        tbl_name = "oseba"
+        tbl_name = type(typ).__name__
         sql_cmd = f'''SELECT * FROM {tbl_name} 
                       WHERE leto={leto}
                       AND kraj={kraj}

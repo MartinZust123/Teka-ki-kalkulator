@@ -14,7 +14,7 @@ def fetch_data():
         min_times_and_lrs = []
 
         for distance_column in distance_columns:
-            postgreSQL_select_Query = f'SELECT "lr", "{distance_column}" FROM "oseba" WHERE "{distance_column}" IS NOT NULL ORDER BY "{distance_column}" LIMIT 10'
+            postgreSQL_select_Query = f'SELECT "lr", "{distance_column}" FROM "rezultat" WHERE "{distance_column}" IS NOT NULL ORDER BY "{distance_column}" LIMIT 10'
             cur.execute(postgreSQL_select_Query)
             rows = cur.fetchall()
             min_times_and_lrs.extend([(row[0], row[1], distance_column) for row in rows])
