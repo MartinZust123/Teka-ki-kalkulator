@@ -27,13 +27,18 @@
         }
     </style>
 </head>
-<table>
-% for vrstica in tabela: 
-    <tr>
-        %for e in vrstica:
-        <td>{{ e }}</td>
-        %end
-    </tr> 
-%end
-</table>
+
+% if not tabela:
+<label>Podatki za izbrano poizvedbo ne obstajajo. Izberi drugo poizvedbo.</label>
+% else:
+    <table>
+    % for vrstica in tabela: 
+        <tr>
+            %for e in vrstica:
+            <td>{{ e }}</td>
+            %end
+        </tr> 
+    %end
+    </table>
+% end
 </html>
