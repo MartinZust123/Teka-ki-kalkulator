@@ -24,28 +24,32 @@ class Rezultat:
     spol: str = field(default="")
     priimekinime: str = field(default="")
     lr: int = field(default=0)
-    km_tt: str = field(default="")
-    km_ss: str = field(default="")
-    km_deset: str = field(default="")
-    km_tri: str = field(default="")
-
+    
     kraj: str = field(default="")
     leto: int = field(default=0)
     razdalja: int = field(default=0)
 
-    km_sest: str = field(default="")
-    km_sedemnajst: str = field(default="")
-    km_enaindvajset: str = field(default="")
+    km_dva: str = field(default="")
+    km_tri: str = field(default="")
+    km_tt: str = field(default="")
     km_pet: str = field(default="")
+    km_sest: str = field(default="")
+    km_ss: str = field(default="")
+    km_deset: str = field(default="")
     km_petnajst: str = field(default="")
+    km_sedemnajst: str = field(default="")
     km_dvajset: str = field(default="")
+    km_enaindvajset: str = field(default="")
     km_polmaraton: str = field(default="")
     km_petindvajset: str = field(default="")
     km_trideset: str = field(default="")
     km_petintrideset: str = field(default="")
     km_stirideset: str = field(default="")
     km_maraton: str = field(default="")
-    km_dva: str = field(default="")
+
+    
+
+    
 
 @dataclass_json
 @dataclass
