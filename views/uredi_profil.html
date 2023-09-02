@@ -6,34 +6,36 @@
     </head>
     <body>
         <table>
-            <form action="/posodobi_profil/">
+            <form method="POST" action="/posodobi_profil/">
                 <tr>
                     <td colspan="2">
                         <h1>Posodobitev profila</h1>
                     </td>
                 </tr>
+                <tr><td><h3>Izpolni vsa polja!</h3></td></tr>
                 <tr>
                     <td>
                         <h2>Ime in priimek</h2>
                     </td>
                     <td>
-                        <input type="text" id="username" name="name" class= "my-input" value="{{ime}} {{priimek}}"/>
+                        <input type="text" id="username" name="name" class= "my-input"/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h2>Uporabniško ime</h2>
+                        <h2>Spol</h2>
                     </td>
                     <td>
-                        <input type="text" id="username" name="username1" class= "my-input" />
+                        <h3>Moški:</h3><input type="checkbox" id="username" name="gender" value="M" class= "my-input" />
+                        <h3>Ženski:</h3> <input type="checkbox" id="username" name="gender" value="Z" class= "my-input" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h2>Starost</h2>
+                        <h2>Leto rojstva</h2>
                     </td>
                     <td>
-                        <input type="text" id="username" name="age" class= "my-input" value="{{starost}}" />
+                        <input type="number" id="year" name="year" class= "my-input"/>
                     </td>
                 </tr>
                 <tr>
@@ -54,7 +56,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input class="my-input" type="submit" value="Posodobi profil"/>
+                        <input class="my-input" type="submit" value="Posodobi"/>
                     </td>
                 </tr>
             </form>
