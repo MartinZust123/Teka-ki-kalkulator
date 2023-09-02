@@ -19,6 +19,8 @@ import naiven_tekaski_kalkulator
 import running_calculator as rc
 from fetch_table_data import fetch_table_data
 
+#matej: popravi še uporabnika javnost da bo za demo (ko bo baza delala)
+
 #= STATIČNE DATOTEKE =============================================================================#
 
 @bottle.get("/static/<filepath:path>")
@@ -87,7 +89,7 @@ def odjava():
 
 @get("/registracija/")
 def registracija():
-    return bottle.template("registracija.html")
+    return bottle.template("registracija.html", napaka=None)
 
 @post("/registracija/")
 def registriraj_se():
@@ -102,7 +104,6 @@ def registriraj_se():
     if geslo != geslo1:
         return bottle.template("registracija.html", napaka="Gesli se ne ujemata")
     else:
-        print(Uporabnik("", username, ime, geslo, spol, starost))
         if auth.dodaj_uporabnika(username, ime, geslo, spol, starost):
             prijava = auth.prijavi_uporabnika(username, geslo)
         else:
@@ -116,25 +117,35 @@ def registriraj_se():
 #= UREJANJE PROFILA ==============================================================================#
 
 @get("/uredi_profil/")
-#@cookie_required
+@cookie_required
 def uredi_profil():
-    ime = bottle.request.forms.getunicode("ime")
-    priimek = bottle.request.forms.getunicode("priimek")
-    starost = bottle.request.forms.getunicode("starost")
-    return bottle.template("uredi_profil.html",ime=ime, priimek=priimek,starost=starost)
+    return bottle.template("uredi_profil.html")
 
-@get("/posodobi_profil/")
-#@cookie_required
+@post("/posodobi_profil/")
+@cookie_required
 def posodobi_profil():
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+
     geslo = bottle.request.forms.getunicode("password")
     geslo1 = bottle.request.forms.getunicode("password1")
-    username1 = bottle.request.forms.getunicode("username1")
     ime = bottle.request.forms.getunicode("name")
-    starost = bottle.request.forms.getunicode("age")
+    starost = bottle.request.forms.getunicode("year")
+    spol = bottle.request.forms.getunicode("gender")
+
+#    print(starost)
+
     if geslo != geslo1:
-        return bottle.template("registracija1.html")
+        return bottle.template("uredi_profil.html", napaka="Gesli se ne ujemata. Poskusi znova.")
     else:
-        return bottle.template("zacetna_stran.html", username= username1)
+        user = Uporabnik(
+            username=uporabnik, 
+            imeinpriimek=ime, 
+            geslo=geslo,
+            spol=spol, 
+            starost=starost
+        )
+        repo.posodobi_gen(user, "username")
+        return bottle.template("zacetna_stran.html", username=uporabnik)
     
 #= REZULTATI PRETEKLIH TEKMOVANJ =================================================================#
 
@@ -142,41 +153,60 @@ def posodobi_profil():
 def rezultati_tekov():
     return bottle.template("rezultati.html")
 
-@get("/prikazi_rezultate/")
+@post("/prikazi_rezultate/")
 def prikazi_rezultate():
     maraton = bottle.request.forms.getunicode("maraton")
     if maraton == "mali_kraski_maraton":
         maraton = "kraski"
+        izpis = "Mali Kraški maraton"
     elif maraton == "ljubljanski_maraton":
         maraton = "ljubljanski"
+        izpis = "Ljubljanski maraton"
     elif maraton == "blejska_desetka":
         maraton = "bled"
+        izpis = "Blejska desetka"
     else:
         maraton = "kranj"
+        izpis = "Kranjski maraton"
     # nocni manjka
 
     # razdalje in letnice ne prebere pravilno !!!
-    razdalja = int(bottle.request.forms.getunicode("razdalja"))
-    letnica = int(bottle.request.forms.getunicode("letnica"))
+    razdalja = bottle.request.forms.getunicode("dist")
+    letnica = bottle.request.forms.getunicode("year")
     spol = bottle.request.forms.getunicode("spol")
 
     if spol == "moški":
         spol = "M"
+        sp = "moške"
     else:
         spol = "Z"
-    
-    print(letnica)
-    print(razdalja)
-    print(maraton)
-    print(spol)
+        sp = "ženske"
 
-    tabela = Repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
-    print(tabela)
+    tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
+    #print(tabela) 
 
-    
+    return bottle.template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
 
-#    tabela = fetch_table_data(int(letnica), maraton, int(razdalja), spol)
-    return bottle.template("rezultati1.html", tabela=tabela)
+
+# bo za preimenovat stolpce da se skladajo z dataclassi ko bo baza delala
+#ALTER TABLE rezultat
+#RENAME COLUMN _2km TO km_dva,
+#RENAME COLUMN _3km TO km_tri,
+#RENAME COLUMN _3.3km TO km_tt,
+#RENAME COLUMN _5km TO km_pet,
+#RENAME COLUMN _6km TO km_sest,
+#RENAME COLUMN _6.6km TO km_ss,
+#RENAME COLUMN _10km TO km_deset,
+#RENAME COLUMN _15km TO km_petnajst,
+#RENAME COLUMN _17km TO km_sedemnajst,
+#RENAME COLUMN _20km TO km_dvajset,
+#RENAME COLUMN _21km TO km_enaindvajset,
+#RENAME COLUMN _21.1km TO km_polmaraton,
+#RENAME COLUMN _25km TO km_petindvajset,
+#RENAME COLUMN _30km TO km_trideset,
+#RENAME COLUMN _35km TO km_petintrideset,
+#RENAME COLUMN _40km TO km_stirideset,
+#RENAME COLUMN _42km TO km_maraton;
 
 #= TVOJA STATISTIKA ==============================================================================#
 
@@ -186,7 +216,7 @@ def vrni_statistiko():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
     u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
     return bottle.template("statistika.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
-#    return bottle.template("statistika.html", ime="Ioann Stanković", starost="26", spol="moški")
+
 
 @get("/tvoji_treningi/")
 @cookie_required
@@ -195,7 +225,7 @@ def prikazi_treninge():
 
     teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
 
-    return bottle.template("tvoji_treningi.html", tabela=teki)
+    return bottle.template("tvoji_treningi.html", tabela=teki, username=uporabnik)
 
 @post("/tvoji_treningi/")
 def vnesi_trening():
@@ -214,6 +244,7 @@ def vnesi_trening():
         cas=cas
     )
 
+#!!!!!!!!!!!!!!!!!
     repo.dodaj_gen(trening) #naj bi manjkal nek permission zato noce commitat na bazo
 
 
