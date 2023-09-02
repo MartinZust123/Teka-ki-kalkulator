@@ -217,9 +217,9 @@ class Repo:
         tbl_name = "rezultat"
         sql_cmd = f'''SELECT * FROM {tbl_name} 
                       WHERE leto={leto}
-                      AND kraj={kraj}
-                      AND km={km}
-                      AND spol={spol}
+                      AND kraj='{kraj}'
+                      AND razdalja={km}
+                      AND spol='{spol}'
                       OFFSET {skip};'''
         self.cur.execute(sql_cmd)
         return [typ.from_dict(d) for d in self.cur.fetchall()]
