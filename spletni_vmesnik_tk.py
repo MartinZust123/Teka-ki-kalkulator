@@ -170,7 +170,7 @@ def prikazi_rezultate():
     print(maraton)
     print(spol)
 
-    tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
+    tabela = Repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
     print(tabela)
 
     
