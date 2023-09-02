@@ -28,17 +28,62 @@
     </style>
 </head>
 
+<body>
+
 % if not tabela:
 <label>Podatki za izbrano poizvedbo ne obstajajo. Izberi drugo poizvedbo.</label>
 % else:
+    
+    <h2>Izpis podatkov za tekmovanje {{kraj}} leta {{leto}} na razdalji {{razdalja}} za {{sp}}</h2>
     <table>
-    % for vrstica in tabela: 
         <tr>
-            %for e in vrstica:
-            <td>{{ e }}</td>
-            %end
-        </tr> 
-    %end
+            <th>Priimek in ime</th>
+            <th>Leto rojstva</th>		
+            <th>2km</th>	
+            <th>3km</th>	
+            <th>3.3km</th>	
+            <th>5km</th>	
+            <th>6km</th>		
+            <th>6.6km</th>	
+            <th>10km</th>		
+            <th>15km</th>		
+            <th>17km</th>	
+            <th>20km</th>	
+            <th>21km</th>	
+            <th>21.1km</th>		
+            <th>25km</th>
+            <th>30km</th>		
+            <th>35km</th>	
+            <th>40km</th>	
+            <th>42km</th>
+        </tr>
+        %for l in tabela:
+        <tr>
+            <td>{{l.priimekinime}}</td>
+            <td>{{l.lr}}</td>
+            <td>{{l.km_dva}}</td>
+            <td>{{l.km_tri}}</td>
+            <td>{{l.km_tt}}</td>
+            <td>{{l.km_pet}}</td>
+            <td>{{l.km_sest}}</td>
+            <td>{{l.km_ss}}</td>
+            <td>{{l.km_deset}}</td>
+            <td>{{l.km_petnajst}}</td>
+            <td>{{l.km_sedemnajst}}</td>
+            <td>{{l.km_dvajset}}</td>
+            <td>{{l.km_enaindvajset}}</td>
+            <td>{{l.km_polmaraton}}</td>
+            <td>{{l.km_petindvajset}}</td>
+            <td>{{l.km_trideset}}</td>
+            <td>{{l.km_petintrideset}}</td>
+            <td>{{l.km_stirideset}}</td>
+            <td>{{l.km_maraton}}</td>
+        </tr>
+        %end
     </table>
 % end
+</body>
 </html>
+
+
+
