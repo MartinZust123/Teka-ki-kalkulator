@@ -121,15 +121,17 @@
 <div class="container">
 <table>
     <tr>
-      <th>Datum</th>
-      <th>Razdalja</th>
-      <th>Čas</th>
+      <th><h3>Datum</h3></th>
+      <th><h3>Razdalja</h3></th>
+      <th><h3>Čas</h3></th>
+      <th></th>
     </tr>
     %for l in tabela:
     <tr>
       <td>{{l.datum}}</td>
       <td>{{l.razdalja}}</td>
       <td>{{l.cas}}</td>
+      <td><a href="{{url("izbrisi_tek", id=l.id)}}">Izbriši</a></td>
     </tr>
     %end
 </table>

@@ -1,6 +1,6 @@
 import os
 
-from bottleext import get, post, run, request, template, redirect, static_file, url, response #, template_user
+from bottleext import get, post, template, redirect, static_file, response, url
 import bottle 
 import bcrypt
 
@@ -16,9 +16,7 @@ DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 repo = Repo()
 auth = AuthService(repo)
 
-import naiven_tekaski_kalkulator
-import running_calculator as rc
-from fetch_table_data import fetch_table_data
+#import running_calculator as rc
 
 #= STATIČNE DATOTEKE =============================================================================#
 
@@ -45,24 +43,24 @@ def cookie_required(f):
 
 @get("/")
 def prvi_zaslon():
-    return bottle.template("zacetna_stran_tk.html")
+    return template("zacetna_stran_tk.html")
 
 
 @get("/prva/")
 @cookie_required
 def prva():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
-    return bottle.template("zacetna_stran.html", username=uporabnik)
+    return template("zacetna_stran.html", username=uporabnik)
 
 @get("/odjava/")
 def prvi_zaslon():
-    return bottle.template("zacetna_stran_tk.html")
+    return template("zacetna_stran_tk.html")
 
 #= PRIJAVA, ODJAVA, REGISTRACIJA =================================================================#
 
 @get("/prijava/")
 def vrni_prijavo():
-    return bottle.template("prijava.html")
+    return template("prijava.html")
 
 @post("/prijava/")
 def prijava():
@@ -88,7 +86,7 @@ def odjava():
 
 @get("/registracija/")
 def registracija():
-    return bottle.template("registracija.html", napaka=None)
+    return template("registracija.html", napaka=None)
 
 @post("/registracija/")
 def registriraj_se():
@@ -101,12 +99,12 @@ def registriraj_se():
 
     
     if geslo != geslo1:
-        return bottle.template("registracija.html", napaka="Gesli se ne ujemata")
+        return template("registracija.html", napaka="Gesli se ne ujemata")
     else:
         if auth.dodaj_uporabnika(username, ime, geslo, spol, starost):
             prijava = auth.prijavi_uporabnika(username, geslo)
         else:
-            return bottle.template("registracija.html", napaka="Uporabnik s tem uporabniškim imenom že obstaja")
+            return template("registracija.html", napaka="Uporabnik s tem uporabniškim imenom že obstaja")
         
         if prijava:
             response.set_cookie("uporabnisko_ime", username, path="/")
@@ -118,7 +116,7 @@ def registriraj_se():
 @get("/uredi_profil/")
 @cookie_required
 def uredi_profil():
-    return bottle.template("uredi_profil.html")
+    return template("uredi_profil.html")
 
 @post("/posodobi_profil/")
 @cookie_required
@@ -131,7 +129,7 @@ def posodobi_profil():
     starost = bottle.request.forms.getunicode("year")
 
     if geslo != geslo1:
-        return bottle.template("uredi_profil.html", napaka="Gesli se ne ujemata. Poskusi znova.")
+        return template("uredi_profil.html", napaka="Gesli se ne ujemata. Poskusi znova.")
     else:
         # kodiranje gesla
         bytes = geslo.encode('utf-8')
@@ -148,13 +146,13 @@ def posodobi_profil():
         )
 
         repo.posodobi_gen(user, "username")
-        return bottle.template("zacetna_stran.html", username=uporabnik)
+        return template("zacetna_stran.html", username=uporabnik)
     
 #= REZULTATI PRETEKLIH TEKMOVANJ =================================================================#
 
 @get("/rezultati/")
 def rezultati_tekov():
-    return bottle.template("rezultati.html")
+    return template("rezultati.html")
 
 @post("/prikazi_rezultate/")
 def prikazi_rezultate():
@@ -196,7 +194,7 @@ def prikazi_rezultate():
     else:
         tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
 
-    return bottle.template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
+    return template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
 
 #= TVOJA STATISTIKA ==============================================================================#
 
@@ -205,7 +203,7 @@ def prikazi_rezultate():
 def vrni_statistiko():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
     u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
-    return bottle.template("statistika.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
+    return template("statistika.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
 
 
 @get("/tvoji_treningi/")
@@ -215,7 +213,7 @@ def prikazi_treninge():
 
     teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
 
-    return bottle.template("tvoji_treningi.html", tabela=teki, username=uporabnik)
+    return template("tvoji_treningi.html", tabela=teki, username=uporabnik, url=url)
 
 @post("/tvoji_treningi/")
 @cookie_required
@@ -235,14 +233,25 @@ def vnesi_trening():
         cas=cas
     )
 
+
     repo.dodaj_gen(trening) 
     redirect("/tvoji_treningi/")
 
+@get("/izbrisi_tek/<id:int>/")
+@cookie_required
+def izbrisi_tek(id):    
+
+    repo.izbrisi_gen(Tek, id)
+
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
+    return template("tvoji_treningi.html", tabela=teki, username=uporabnik)
+   
 #= TEKAŠKI KALKULATOR ============================================================================#
 
 @get("/kalkulator/")
 def vrni_kalkulator():
-    return bottle.template("kalkulator.html")
+    return template("kalkulator.html")
 
 @post("/preracunaj/")
 def preracunaj_get():
@@ -252,7 +261,7 @@ def preracunaj_get():
     zeljena = bottle.request.forms.getunicode("zeljena")
     starost = bottle.request.forms.getunicode("starost")
 
-    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
-    return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
+#    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
+    return template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
 
 bottle.run(reloader=True)
