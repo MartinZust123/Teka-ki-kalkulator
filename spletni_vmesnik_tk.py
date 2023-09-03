@@ -213,7 +213,7 @@ def prikazi_treninge():
 
     teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
 
-    return template("tvoji_treningi.html", tabela=teki, username=uporabnik, url=url)
+    return template("tvoji_treningi.html", tabela=teki, username=uporabnik)
 
 @post("/tvoji_treningi/")
 @cookie_required
