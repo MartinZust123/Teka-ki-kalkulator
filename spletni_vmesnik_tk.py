@@ -187,27 +187,6 @@ def prikazi_rezultate():
 
     return bottle.template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
 
-
-# bo za preimenovat stolpce da se skladajo z dataclassi ko bo baza delala
-#ALTER TABLE rezultat
-#RENAME COLUMN _2km TO km_dva,
-#RENAME COLUMN _3km TO km_tri,
-#RENAME COLUMN _3.3km TO km_tt,
-#RENAME COLUMN _5km TO km_pet,
-#RENAME COLUMN _6km TO km_sest,
-#RENAME COLUMN _6.6km TO km_ss,
-#RENAME COLUMN _10km TO km_deset,
-#RENAME COLUMN _15km TO km_petnajst,
-#RENAME COLUMN _17km TO km_sedemnajst,
-#RENAME COLUMN _20km TO km_dvajset,
-#RENAME COLUMN _21km TO km_enaindvajset,
-#RENAME COLUMN _21.1km TO km_polmaraton,
-#RENAME COLUMN _25km TO km_petindvajset,
-#RENAME COLUMN _30km TO km_trideset,
-#RENAME COLUMN _35km TO km_petintrideset,
-#RENAME COLUMN _40km TO km_stirideset,
-#RENAME COLUMN _42km TO km_maraton;
-
 #= TVOJA STATISTIKA ==============================================================================#
 
 @get("/statistika/")
