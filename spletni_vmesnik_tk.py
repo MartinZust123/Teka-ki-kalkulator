@@ -16,7 +16,7 @@ DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 repo = Repo()
 auth = AuthService(repo)
 
-#import running_calculator as rc
+import running_calculator as rc
 
 #= STATIČNE DATOTEKE =============================================================================#
 
@@ -261,7 +261,7 @@ def preracunaj_get():
     zeljena = bottle.request.forms.getunicode("zeljena")
     starost = bottle.request.forms.getunicode("starost")
 
-#    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
+    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
     return template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
 
 bottle.run(reloader=True)
