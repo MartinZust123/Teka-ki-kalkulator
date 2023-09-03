@@ -43,6 +43,12 @@ class Repo:
         self.cur.execute(sql_cmd)
         return [typ.from_dict(d) for d in self.cur.fetchall()]
     
+    def dobi_gen_ordered(self, typ: Type[TEK], order: str, take=20, skip=0) -> List[TEK]:
+        tbl_name = typ.__name__
+        sql_cmd = f'''SELECT * FROM {tbl_name} LIMIT {take} OFFSET {skip} ORDER BY %s;'''
+        self.cur.execute(sql_cmd, (order,))
+        return [typ.from_dict(d) for d in self.cur.fetchall()]
+    
     def dobi_gen_id(self, typ: Type[TEK], id: Union[int, str], id_col = "id") -> TEK:
         """
         Generična metoda, ki vrne dataclass objekt pridobljen iz baze na podlagi njegovega idja.
@@ -64,6 +70,13 @@ class Repo:
         """
         tbl_name = typ.__name__
         sql_cmd = f'SELECT * FROM {tbl_name} WHERE {id_col} = %s';
+        self.cur.execute(sql_cmd, (id,))    
+        return [typ.from_dict(s) for s in self.cur.fetchall()]
+    
+    def dobi_vse_gen_id_ordered(self, typ: Type[TEK], id: Union[int, str], order: str, asc = True, id_col = "id") -> TEK:
+        tbl_name = typ.__name__
+        a = "asc" if asc else "desc"
+        sql_cmd = f'SELECT * FROM {tbl_name} WHERE {id_col} = %s ORDER BY {order} {a}';
         self.cur.execute(sql_cmd, (id,))    
         return [typ.from_dict(s) for s in self.cur.fetchall()]
     
