@@ -239,8 +239,20 @@ def vnesi_trening():
     redirect("/tvoji_treningi/")
 
 @get("/vizualni_podatki/")
+@cookie_required
 def prikazi_vizualne_podatke():
-    return template("vizualni_podatki.html")
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
+    return template("vizualni_podatki.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
+
+@get("/histogram_tempov/")
+@cookie_required
+def prikazi_histogram():
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
+    hist = vv.narisi_histogram_tempov(teki)
+
+    return template("histogram.html", hist=hist)
 
 @get("/izbrisi_tek/<id:int>/")
 @cookie_required
