@@ -2,7 +2,6 @@ from data.Database import Repo
 from data.Modeli import *
 from typing import Dict
 from re import sub
-import dataclasses
 import bcrypt
 from typing import Type, Union
 from datetime import date

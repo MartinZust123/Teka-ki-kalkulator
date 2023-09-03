@@ -2,6 +2,7 @@ import os
 
 from bottleext import get, post, run, request, template, redirect, static_file, url, response #, template_user
 import bottle 
+import bcrypt
 
 from data.Database import Repo
 from data.Modeli import *
@@ -125,25 +126,31 @@ def uredi_profil():
 @cookie_required
 def posodobi_profil():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
-
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
     geslo = bottle.request.forms.getunicode("password")
     geslo1 = bottle.request.forms.getunicode("password1")
     ime = bottle.request.forms.getunicode("name")
     starost = bottle.request.forms.getunicode("year")
-    spol = bottle.request.forms.getunicode("gender")
 
 #    print(starost)
 
     if geslo != geslo1:
         return bottle.template("uredi_profil.html", napaka="Gesli se ne ujemata. Poskusi znova.")
     else:
+        # kodiranje gesla
+        bytes = geslo.encode('utf-8')
+        salt = bcrypt.gensalt()
+        password_hash = bcrypt.hashpw(bytes, salt)
+
         user = Uporabnik(
+            id=u.id,
             username=uporabnik, 
             imeinpriimek=ime, 
-            geslo=geslo,
-            spol=spol, 
+            geslo=password_hash.decode(),
+            spol=u.spol, 
             starost=starost
         )
+        
         repo.posodobi_gen(user, "username")
         return bottle.template("zacetna_stran.html", username=uporabnik)
     
@@ -183,8 +190,6 @@ def prikazi_rezultate():
         sp = "ženske"
 
     tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
-    #print(tabela) 
-
     return bottle.template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
 
 #= TVOJA STATISTIKA ==============================================================================#
