@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>VIZUALNI PODATKI</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="/static/css/statistika.css">
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td colspan="2">
+                    <h1>TVOJI PODATKI</h1>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <h2>{{ime}}</h2> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>{{starost}}, {{spol}}</h2>
+                </td>
+                <td>
+                    <form action="/uredi_profil/" >
+                        <input type="hidden" name="ime" value="{{ime}}">
+                        <input type="hidden" name="starost" value="{{starost}}">
+                        <input type="submit" value="Uredi profil" class="forme"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        &nbsp
+        <br>
+        <table width="70%">
+            <tr>
+                <td>
+                    <form action="/histogram_tempov/" >
+                        <input type="submit" value="HISTOGRAM TEMPOV" class="forme1"/>
+                    </form>
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    <form action="/dolzine_treningov/" >
+                        <input type="submit" value="DOLŽINE TRENINGOV" class="forme1"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

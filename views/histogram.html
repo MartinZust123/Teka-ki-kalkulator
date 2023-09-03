@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>HISTOGRAM TEMPOV</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="/static/css/statistika.css">
+    </head>
+    <body>
+        <table>
+        <tr>
+            <td>
+                <h2>Tempi treningov</h2>
+            </td>
+        </tr>
+        %for el in hist:
+        <tr>
+            <td>
+                <h2>{{el}}</h2>
+            </td>
+        </tr>
+        %end
+        </table>
+        %import matplotlib.pyplot as plt
+        %import numpy as np
+        %values = np.array(hist)
+        %plt.hist(values)
+        %plt.show()
+    </body>
+</html>

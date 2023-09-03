@@ -17,6 +17,7 @@ repo = Repo()
 auth = AuthService(repo)
 
 import running_calculator as rc
+import vizualni_vmesnik as vv 
 
 #= STATIČNE DATOTEKE =============================================================================#
 
@@ -213,7 +214,7 @@ def prikazi_treninge():
 
     teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
 
-    return template("tvoji_treningi.html", tabela=teki, username=uporabnik, url=url)
+    return template("tvoji_treningi.html", tabela=teki, username=uporabnik)
 
 @post("/tvoji_treningi/")
 @cookie_required
@@ -236,6 +237,43 @@ def vnesi_trening():
 
     repo.dodaj_gen(trening) 
     redirect("/tvoji_treningi/")
+
+@get("/vizualni_podatki/")
+@cookie_required
+def prikazi_vizualne_podatke():
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
+    return template("vizualni_podatki.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
+
+@get("/histogram_tempov/")
+@cookie_required
+def prikazi_histogram():
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
+    hist = vv.narisi_histogram_tempov(teki)
+    import matplotlib.pyplot as plt
+    import numpy as np
+    values = np.array(hist)
+    plt.hist(values, label="Tempo na kilometer v minutah")
+    plt.legend()
+    plt.show()
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
+    return template("vizualni_podatki.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
+
+@get("/dolzine_treningov/")
+@cookie_required
+def prikazi_histogram():
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
+    hist = vv.narisi_histogram_dolzin(teki)
+    import matplotlib.pyplot as plt
+    import numpy as np
+    values = np.array(hist)
+    plt.hist(values, label="Dolžine treningov v kilometrih")
+    plt.legend()
+    plt.show()
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
+    return template("vizualni_podatki.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
 
 @get("/izbrisi_tek/<id:int>/")
 @cookie_required
@@ -260,8 +298,10 @@ def preracunaj_get():
     sek = bottle.request.forms.getunicode("sek")
     zeljena = bottle.request.forms.getunicode("zeljena")
     starost = bottle.request.forms.getunicode("starost")
+    utezi = rc.utezi 
+    closest_utezi = rc.find_closest_value(int(zeljena), utezi)
 
-    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
+    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost), closest_utezi)
     return template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
 
 bottle.run(reloader=True)
