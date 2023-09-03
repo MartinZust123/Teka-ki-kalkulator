@@ -260,8 +260,10 @@ def preracunaj_get():
     sek = bottle.request.forms.getunicode("sek")
     zeljena = bottle.request.forms.getunicode("zeljena")
     starost = bottle.request.forms.getunicode("starost")
+    utezi = rc.utezi 
+    closest_utezi = rc.find_closest_value(int(zeljena), utezi)
 
-    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
+    cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost), closest_utezi)
     return template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
 
 bottle.run(reloader=True)
