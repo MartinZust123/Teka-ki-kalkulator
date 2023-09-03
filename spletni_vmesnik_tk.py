@@ -251,7 +251,29 @@ def prikazi_histogram():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
     teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
     hist = vv.narisi_histogram_tempov(teki)
-    return template("histogram.html", hist=hist)
+    import matplotlib.pyplot as plt
+    import numpy as np
+    values = np.array(hist)
+    plt.hist(values, label="Tempo na kilometer v minutah")
+    plt.legend()
+    plt.show()
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
+    return template("vizualni_podatki.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
+
+@get("/dolzine_treningov/")
+@cookie_required
+def prikazi_histogram():
+    uporabnik = bottle.request.get_cookie("uporabnisko_ime")
+    teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
+    hist = vv.narisi_histogram_dolzin(teki)
+    import matplotlib.pyplot as plt
+    import numpy as np
+    values = np.array(hist)
+    plt.hist(values, label="Dolžine treningov v kilometrih")
+    plt.legend()
+    plt.show()
+    u = repo.dobi_gen_id(Uporabnik, uporabnik, "username")
+    return template("vizualni_podatki.html", ime=u.imeinpriimek, starost=u.starost, spol=u.spol)
 
 @get("/izbrisi_tek/<id:int>/")
 @cookie_required
