@@ -31,14 +31,14 @@ def running_calc(dist, time, goal, age, closest_utezi):
     else:
         exhoustion_factor = abs(age/opt_leta-1)
         exhoustion_factor = min(exhoustion_factor, 0.05)
-        exhoustion_factor_second = goal/10000000
+        exhoustion_factor_second = abs(goal-dist)/10000000
     pace = (time/60)  / dist
     if pace <= 2:
         return "Neveljavni parametri 2"
     E = round(0.5 * goal + 0.5 * (pace), 3)
     utez = closest_utezi[2]/(60*1000)
-    # dodana utez proporcionalno na tek, ki ga imajo
-    adjusted_pace = (1-exhoustion_factor) * pace + (exhoustion_factor)*utez + exhoustion_factor_second*pace
+    # dodana utez proporcionalno na tek, ki ga imajo, dodana se ena utez ki  vpliva na dolge razdalje
+    adjusted_pace = (1-exhoustion_factor) * pace + (exhoustion_factor)*utez + exhoustion_factor_second
     if goal >= dist:
         extra_time = (goal - dist) * adjusted_pace
         time_goal = extra_time + (time / 60)
