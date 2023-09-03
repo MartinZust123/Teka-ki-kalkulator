@@ -20,8 +20,6 @@ import naiven_tekaski_kalkulator
 import running_calculator as rc
 from fetch_table_data import fetch_table_data
 
-#matej: popravi še uporabnika javnost da bo za demo (ko bo baza delala)
-
 #= STATIČNE DATOTEKE =============================================================================#
 
 @bottle.get("/static/<filepath:path>")
@@ -132,8 +130,6 @@ def posodobi_profil():
     ime = bottle.request.forms.getunicode("name")
     starost = bottle.request.forms.getunicode("year")
 
-#    print(starost)
-
     if geslo != geslo1:
         return bottle.template("uredi_profil.html", napaka="Gesli se ne ujemata. Poskusi znova.")
     else:
@@ -202,8 +198,6 @@ def prikazi_rezultate():
 
     return bottle.template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
 
-
-
 #= TVOJA STATISTIKA ==============================================================================#
 
 @get("/statistika/")
@@ -224,6 +218,7 @@ def prikazi_treninge():
     return bottle.template("tvoji_treningi.html", tabela=teki, username=uporabnik)
 
 @post("/tvoji_treningi/")
+@cookie_required
 def vnesi_trening():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
 
@@ -256,9 +251,8 @@ def preracunaj_get():
     sek = bottle.request.forms.getunicode("sek")
     zeljena = bottle.request.forms.getunicode("zeljena")
     starost = bottle.request.forms.getunicode("starost")
+
     cas = rc.running_calc(int(pretecena)*1000, int(minute)*60 + int(sek), int(zeljena)*1000, int(starost))
-    #nove_min = int(cas // 1)
-    #nove_sek = int(((cas - nove_min) * 60) // 1)
     return bottle.template("kalkulator1.html", pretecena = pretecena, minute = minute, sek = sek, zeljena = zeljena, starost = starost, cas=cas)
 
 bottle.run(reloader=True)
