@@ -2,9 +2,8 @@ from data.Database import Repo
 from data.Modeli import *
 from typing import Dict
 from re import sub
-import dataclasses
 import bcrypt
-from typing import Type
+from typing import Type, Union
 from datetime import date
 
 class AuthService:
@@ -21,25 +20,25 @@ class AuthService:
         except:
             return False
 
-    def prijavi_uporabnika(self, uporabnik : str, geslo: str) -> UporabnikDto | bool :
+    def prijavi_uporabnika(self, uporabnik : str, geslo: str) -> Union[UporabnikDto,bool] :
 
         # Najprej dobimo uporabnika iz baze
         user = self.repo.dobi_gen_id(Uporabnik, uporabnik, id_col="username")
 
         geslo_bytes = geslo.encode('utf-8')
         # Ustvarimo hash iz gesla, ki ga je vnesel uporabnik
-        succ = bcrypt.checkpw(geslo_bytes, user.password_hash.encode('utf-8'))
+        succ = bcrypt.checkpw(geslo_bytes, user.geslo.encode('utf-8'))
 
         if succ:
             # popravimo last login time
             #user.last_login = date.today().isoformat()
             #self.repo.posodobi_gen(user, id_col="username")
-            return UporabnikDto(username=user.username)
+            return UporabnikDto(username=user.username, id=user.id)
         
         return False
 
 
-    def dodaj_uporabnika(self, username: str, ime: str, geslo: str, spol: str, leto: int ) -> UporabnikDto:
+    def dodaj_uporabnika(self, username: str, imeinpriimek: str, geslo: str, spol: str, leto: int ) -> UporabnikDto:
 
         # zgradimo hash za geslo od uporabnika
 
@@ -56,12 +55,12 @@ class AuthService:
 
         uporabnik = Uporabnik(
             username = username,
+            imeinpriimek = imeinpriimek,
             geslo = password_hash.decode(),
-            imeinpriimek = ime,
             spol= spol,
-            leto_rojstva = leto
+            starost= leto
         )
 
-        self.repo.dodaj_gen(uporabnik, serial_col=None)
+        self.repo.dodaj_gen(uporabnik)
 
-        return UporabnikDto(username=username)
+        return UporabnikDto(username=username, id=uporabnik.id)

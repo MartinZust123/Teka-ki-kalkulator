@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tvoji treningi</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/static/css/kalkulator.css">
+    <style>
+        /* Add custom styles for the table */
+        body, html {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        table {
+            width: 90%;
+            margin: 0;
+            padding: 0;
+            border-collapse: collapse;
+            table-layout: fixed;
+            border: 1px solid #ccc;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .my-input-container {
+            position: relative;
+            display: inline-block;
+            width: 300px;
+            height: 80px;
+            font-size: 50px;
+            }
+        .blur-bracket {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            filter: blur(1px); /* Apply blur effect to the text */
+            }
+        .blur-text {
+            position: absolute;
+            font-size: 30px;
+            top: 50%;
+            right: 30px;
+            transform: translate(0, -50%);
+            color: gray;
+            }
+        .container {
+            display: flex;
+            justify-content: flex-start; 
+            align-items: flex-start;
+            display: block;
+            margin-bottom: 20px; 
+            margin-top: 20px
+            }
+    </style>
+</head>
+
+
+<body>
+
+    
+<div class="container">
+<form method="post" action="/tvoji_treningi/">
+    <table border="3" cellspacing="0" cellpading="0" width="40%" align="center" align-self="top">
+        <tr>
+            <td colspan="2" align="center">
+                <h2>Vnesi nov tek</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Datum (llll-mm-dd):</h3>
+            </td>
+            <td>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="text" id="datum" name="datum" oninput="updateBlurredInput()" />
+                </span> 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Razdalja</h3>
+            </td>
+            <td>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="number" id="razdalja" name="razdalja" oninput="updateBlurredInput()"/>
+                    <span class="blur-text" id="blurText">m</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Porabljen čas</h3>
+            </td>
+            <td>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="number" id="cas_min" name="cas_min" oninput="updateBlurredInput()"/>
+                    <span class="blur-text" id="blurText">min</span>
+                </span>
+                <span class="blur-bracket">
+                    <input class="my-input-container" type="number" id="cas_sek" name="cas_sek" oninput="updateBlurredInput()"/>
+                    <span class="blur-text" id="blurText">sek</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input class="my-input" type="submit" value="Vnesi"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+
+
+<div class="container">
+<table>
+    <tr>
+      <th><h3>Datum</h3></th>
+      <th><h3>Razdalja</h3></th>
+      <th><h3>Čas</h3></th>
+      <th></th>
+    </tr>
+    %for l in tabela:
+    <tr>
+      <td>{{l.datum}}</td>
+      <td>{{l.razdalja}}</td>
+      <td>{{l.cas}}</td>
+      <td><a href="{{url("izbrisi_tek", id=l.id)}}">Izbriši</a></td>
+    </tr>
+    %end
+</table>
+</div>
+</body>
+
+</html>

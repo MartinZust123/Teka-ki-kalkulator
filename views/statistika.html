@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Statisitka</title>
+        <title>Statistika</title>
         <meta charset="utf-8"/>
         <link rel="stylesheet" href="/static/css/statistika.css">
     </head>
@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <h2>{{ime}} {{priimek}}</h2> 
+                    <h2>{{ime}}</h2> 
                 </td>
             </tr>
             <tr>
@@ -23,7 +23,6 @@
                 <td>
                     <form action="/uredi_profil/" >
                         <input type="hidden" name="ime" value="{{ime}}">
-                        <input type="hidden" name="priimek" value="{{priimek}}">
                         <input type="hidden" name="starost" value="{{starost}}">
                         <input type="submit" value="Uredi profil" class="forme"/>
                     </form>
@@ -63,6 +62,7 @@
                 <td>
                     <form action="/tvoji_treningi/" >
                         <input type="submit" value="TVOJI TRENINGI" class="forme1"/>
+                        <input type="hidden" value="{{ime}}" name="ime"/>
                     </form>
                 </td>
                 <td>

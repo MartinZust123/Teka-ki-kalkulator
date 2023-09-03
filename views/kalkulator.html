@@ -30,7 +30,7 @@
             }
     </style>
     <body>
-        <form action="/preracunaj/">
+        <form method="POST" action="/preracunaj/">
         <table border="3" cellspacing="0" cellpading="0" width="60%" align="center">
             <tr>
                 <td colspan="2" align="center">
@@ -44,7 +44,7 @@
                 <td>
                     <!-- Območje za vnos -->
                     <span class="blur-bracket">
-                        <input class="my-input-container" type="text" id="pretecena" name='pretecena' oninput="updateBlurredInput()" />
+                        <input class="my-input-container" type="text" id="pretecena" name='pretecena' oninput="updateBlurredInput()" required/>
                         <span class="blur-text" id="blurText">km</span>
                     </span>
                     <!-- Zamegljeno besedilo "km" -->
@@ -58,14 +58,14 @@
                 <td>
                     <!-- Območje za vnos -->
                     <span class="blur-bracket">
-                        <input class="my-input-container" type="text" id="min" name="min" oninput="updateBlurredInput()"/>
+                        <input class="my-input-container" type="text" id="min" name="min" oninput="updateBlurredInput()" required/>
                     
                         <!-- Zamegljeno besedilo "min" -->
                         <span class="blur-text" id="blurText">min</span>
                     </span>
                     <span class="blur-bracket">
                         <!-- Območje za vnos -->
-                        <input class="my-input-container" type="text" id="sek" name="sek" oninput="updateBlurredInput()"/>
+                        <input class="my-input-container" type="text" id="sek" name="sek" oninput="updateBlurredInput()" required/>
                     
                         <!-- Zamegljeno besedilo "km" -->
                         <span class="blur-text" id="blurText">sek</span>
@@ -79,7 +79,7 @@
                 <td>
                     <!-- Območje za vnos -->
                     <span class="blur-bracket">
-                        <input class="my-input-container" type="text" id="zeljena" name="zeljena" oninput="updateBlurredInput()" />
+                        <input class="my-input-container" type="text" id="zeljena" name="zeljena" oninput="updateBlurredInput()" required/>
                     
                         <!-- Zamegljeno besedilo "km" -->
                         <span class="blur-text" id="blurText">km</span>
@@ -93,11 +93,15 @@
                 <td>
                     <span class="blur-bracket">
                         <!-- Območje za vnos -->
-                        <input class="my-input-container" type="text" id="starost" name="starost" oninput="updateBlurredInput()"/>
+                        <input class="my-input-container" type="text" id="starost" name="starost" oninput="updateBlurredInput()" required/>
                     
                         <!-- Zamegljeno besedilo "km" -->
                         <span class="blur-text" id="blurText">let</span>
                     </span>
+                </td>
+            </tr>
+            <tr>
+                <td text-align="center">
                     <input class="my-input" type="submit" value="Preračunaj"/>
                 </td>
             </tr>

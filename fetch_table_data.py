@@ -21,3 +21,5 @@ def fetch_table_data(leto,kraj,km,spol):
         print("An error occurred:", e)
 
 
+
+

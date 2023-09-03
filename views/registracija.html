@@ -6,12 +6,16 @@
     </head>
     <body>
         <table>
-            <form action="/registriraj_se/">
+            <form method="POST" action="/registracija/">
                 <tr>
                     <td colspan="2">
                         <h1>Registracija</h1>
                     </td>
                 </tr>
+
+                %if napaka:
+                <tr><td><b>{{napaka}}</b></td></tr>
+                %end
                 <tr>
                     <td>
                         <h2>Ime in priimek</h2>
@@ -25,7 +29,7 @@
                         <h2>Uporabniško ime</h2>
                     </td>
                     <td>
-                        <input type="text" id="username" name="username1" class= "my-input" />
+                        <input type="text" id="username" name="username" class= "my-input" />
                     </td>
                 </tr>
                 <tr>
@@ -41,8 +45,8 @@
                         <h2>Spol</h2>
                     </td>
                     <td>
-                        <h3>Moški:</h3><input type="checkbox" id="username" name="gender" value="moški" class= "my-input" />
-                        <h3>Ženski:</h3> <input type="checkbox" id="username" name="gender" value="ženski" class= "my-input" />
+                        <h3>Moški:</h3><input type="checkbox" id="username" name="gender" value="M" class= "my-input" />
+                        <h3>Ženski:</h3> <input type="checkbox" id="username" name="gender" value="Z" class= "my-input" />
                     </td>
                 </tr>
                 <tr>

@@ -7,29 +7,94 @@
     <style>
         /* Add custom styles for the table */
         body, html {
-            height: 100%;
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
         table {
-            width: 60%;
-            height: 60%;
-            margin: 0;
+            width: 95%;
+            margin: 0 auto;
             padding: 0;
             border-collapse: collapse;
-            table-layout: fixed;
+            table-layout: auto;
             border: 1px solid #ccc;
         }
         td {
-            padding: 20px;
+            padding: 10px;
             text-align: center;
             vertical-align: middle;
         }
     </style>
 </head>
-% for vrstica in tabela: 
-<h2>{{ vrstica }}</h2>
-% end 
+
+<body>
+
+% if not tabela:
+<label>Podatki za izbrano poizvedbo ne obstajajo. Izberi drugo poizvedbo.</label>
+% else:
+<table>
+    <tr>
+        <td>
+        <h2>Izpis podatkov za tekmovanje {{kraj}} leta {{leto}} na razdalji {{razdalja}} km za {{sp}}</h2>
+        </td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+        <td>
+        <table>
+            <tr>
+                <th><h3>Priimek in ime</h3></th>
+                <th><h3>Leto rojstva</h3></th>		
+                <th><h3>2km</h3></th>	
+                <th><h3>3km</h3></th>	
+                <th><h3>3.3km</h3></th>	
+                <th><h3>5km</h3></th>	
+                <th><h3>6km</h3></th>		
+                <th><h3>6.6km</h3></th>	
+                <th><h3>10km</h3></th>		
+                <th><h3>15km</h3></th>		
+                <th><h3>17km</h3></th>	
+                <th><h3>20km</h3></th>	
+                <th><h3>21km</h3></th>	
+                <th><h3>21.1km</h3></th>		
+                <th><h3>25km</h3></th>
+                <th><h3>30km</h3></th>		
+                <th><h3>35km</h3></th>	
+                <th><h3>40km</h3></th>	
+                <th><h3>42km</h3></th>
+            </tr>
+            %for l in tabela:
+            <tr>
+                <td><b>{{l.priimekinime}}</b></td>
+                <td>{{l.lr}}</td>
+                <td>{{l.km_dva}}</td>
+                <td>{{l.km_tri}}</td>
+                <td>{{l.km_tt}}</td>
+                <td>{{l.km_pet}}</td>
+                <td>{{l.km_sest}}</td>
+                <td>{{l.km_ss}}</td>
+                <td>{{l.km_deset}}</td>
+                <td>{{l.km_petnajst}}</td>
+                <td>{{l.km_sedemnajst}}</td>
+                <td>{{l.km_dvajset}}</td>
+                <td>{{l.km_enaindvajset}}</td>
+                <td>{{l.km_polmaraton}}</td>
+                <td>{{l.km_petindvajset}}</td>
+                <td>{{l.km_trideset}}</td>
+                <td>{{l.km_petintrideset}}</td>
+                <td>{{l.km_stirideset}}</td>
+                <td>{{l.km_maraton}}</td>
+            </tr>
+            %end
+        </table>
+        </td>
+    </tr>
+  
+</table>
+% end
+</body>
 </html>
+
+
+

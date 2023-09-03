@@ -6,7 +6,7 @@
     </head>
     <body>
         <table>
-            <form action="/posodobi_profil/">
+            <form method="POST" action="/posodobi_profil/">
                 <tr>
                     <td colspan="2">
                         <h1>Posodobitev profila</h1>
@@ -17,23 +17,15 @@
                         <h2>Ime in priimek</h2>
                     </td>
                     <td>
-                        <input type="text" id="username" name="name" class= "my-input" value="{{ime}} {{priimek}}"/>
+                        <input type="text" id="username" name="name" class= "my-input" required/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h2>Uporabniško ime</h2>
+                        <h2>Leto rojstva</h2>
                     </td>
                     <td>
-                        <input type="text" id="username" name="username1" class= "my-input" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <h2>Starost</h2>
-                    </td>
-                    <td>
-                        <input type="text" id="username" name="age" class= "my-input" value="{{starost}}" />
+                        <input type="number" id="year" name="year" class= "my-input" required/>
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +33,7 @@
                         <h2>Geslo</h2>
                     </td>
                     <td>
-                        <input type="password" id="password" name="password" class= "my-input" />
+                        <input type="password" id="password" name="password" class= "my-input" required/>
                     </td>
                 </tr>
                 <tr>
@@ -49,12 +41,12 @@
                         <h2>Potrdi geslo</h2>
                     </td>
                     <td>
-                        <input type="password" id="password" name="password1" class= "my-input" />
+                        <input type="password" id="password" name="password1" class= "my-input" required/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input class="my-input" type="submit" value="Posodobi profil"/>
+                        <input class="my-input" type="submit" value="Posodobi"/>
                     </td>
                 </tr>
             </form>
