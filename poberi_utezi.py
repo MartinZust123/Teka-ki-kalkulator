@@ -3,7 +3,7 @@ def fetch_utezi():
     import psycopg2
     from psycopg2 import extras
 
-    # Connect to the database
+    # Povezi na bazo
     conn = psycopg2.connect(
         database=auth.db,
         host=auth.host,
@@ -11,10 +11,9 @@ def fetch_utezi():
         password=auth.password
     )
 
-    # Create a cursor
     cur = conn.cursor(cursor_factory=extras.DictCursor)
 
-    # Execute a query to fetch all values from the 'utezi' table
+    # Poberi utezi
     try:
         cur.execute("SELECT * FROM utezi")
         rows = cur.fetchall()
@@ -22,7 +21,6 @@ def fetch_utezi():
         print("Error fetching data:", e)
         rows = []
 
-    # Close cursor and connection
     cur.close()
     conn.close()
 
