@@ -17,6 +17,7 @@ repo = Repo()
 auth = AuthService(repo)
 
 import running_calculator as rc
+import vizualni_vmesnik as vv 
 
 #= STATIČNE DATOTEKE =============================================================================#
 
@@ -236,6 +237,10 @@ def vnesi_trening():
 
     repo.dodaj_gen(trening) 
     redirect("/tvoji_treningi/")
+
+@get("/vizualni_podatki/")
+def prikazi_vizualne_podatke():
+    return template("vizualni_podatki.html")
 
 @get("/izbrisi_tek/<id:int>/")
 @cookie_required
