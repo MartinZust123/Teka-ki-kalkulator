@@ -236,3 +236,16 @@ class Repo:
                       OFFSET {skip};'''
         self.cur.execute(sql_cmd)
         return [typ.from_dict(d) for d in self.cur.fetchall()]
+    
+    def dobi_maraton_ordered(self, typ: Type[TEK], leto, kraj, km, spol, order, asc=True, skip=0) -> List[TEK]:
+        tbl_name = "rezultat"
+        a = "asc" if asc else "desc"
+        sql_cmd = f'''SELECT * FROM {tbl_name} 
+                      WHERE leto={leto}
+                      AND kraj='{kraj}'
+                      AND razdalja={km}
+                      AND spol='{spol}'
+                      ORDER BY {order} {a}
+                      OFFSET {skip};'''
+        self.cur.execute(sql_cmd)
+        return [typ.from_dict(d) for d in self.cur.fetchall()]

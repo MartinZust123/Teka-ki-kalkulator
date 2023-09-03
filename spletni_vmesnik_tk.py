@@ -150,7 +150,7 @@ def posodobi_profil():
             spol=u.spol, 
             starost=starost
         )
-        
+
         repo.posodobi_gen(user, "username")
         return bottle.template("zacetna_stran.html", username=uporabnik)
     
@@ -177,7 +177,6 @@ def prikazi_rezultate():
         izpis = "Kranjski maraton"
     # nocni manjka
 
-    # razdalje in letnice ne prebere pravilno !!!
     razdalja = bottle.request.forms.getunicode("dist")
     letnica = bottle.request.forms.getunicode("year")
     spol = bottle.request.forms.getunicode("spol")
@@ -188,9 +187,22 @@ def prikazi_rezultate():
     else:
         spol = "Z"
         sp = "ženske"
+    
+    order = bottle.request.forms.getunicode("order")
+    if order == "pr_a":
+        tabela = repo.dobi_maraton_ordered(Rezultat, letnica, maraton, razdalja, spol, "priimekinime")
+    elif order == "pr_z":
+        tabela = repo.dobi_maraton_ordered(Rezultat, letnica, maraton, razdalja, spol, "priimekinime", False)
+    elif order == "age_old":
+        tabela = repo.dobi_maraton_ordered(Rezultat, letnica, maraton, razdalja, spol, "lr")
+    elif order == "age_young":
+        tabela = repo.dobi_maraton_ordered(Rezultat, letnica, maraton, razdalja, spol, "lr", False)
+    else:
+        tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
 
-    tabela = repo.dobi_maraton(Rezultat, letnica, maraton, razdalja, spol)
     return bottle.template("rezultati1.html", tabela=tabela, razdalja=razdalja, leto=letnica, kraj=izpis, sp=sp)
+
+
 
 #= TVOJA STATISTIKA ==============================================================================#
 
