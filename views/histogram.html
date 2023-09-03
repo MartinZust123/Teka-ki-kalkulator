@@ -21,11 +21,8 @@
         </table>
         %import matplotlib.pyplot as plt
         %import numpy as np
-        %import mpld3
         %values = np.array(hist)
-        %html_graph = mpld3.fig_to_html(plt.gcf())
-        %plt.close()
-        %with open("output.html", "w") as f:
-        %f.write(html_graph)
+        %plt.hist(values)
+        %plt.show()
     </body>
 </html>

@@ -249,9 +249,8 @@ def prikazi_vizualne_podatke():
 @cookie_required
 def prikazi_histogram():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
-    teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
+    teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
     hist = vv.narisi_histogram_tempov(teki)
-
     return template("histogram.html", hist=hist)
 
 @get("/izbrisi_tek/<id:int>/")
