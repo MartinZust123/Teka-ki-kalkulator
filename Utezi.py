@@ -10,25 +10,27 @@ def fetch_data():
 
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        distance_columns = ["3.3km", "6.6km", "10km", "3km", "6km", "17km", "21km", "5km", "15km", "20km", "21.1km", "25km", "30km", "35km", "40km", "42km", "2km"]
+        distance_columns = ['km_maraton', 'km_petintrideset', 'km_stirideset', 'km_dva', 'km_tri', 'km_tt', 'km_pet', 'km_sest', 'km_ss', 'km_deset', 'km_petnajst', 'km_sedemnajst', 'km_dvajset', 'km_enaindvajset', 'km_polmaraton', 'km_petindvajset', 'km_trideset']
         min_times_and_lrs = []
 
         for distance_column in distance_columns:
-            postgreSQL_select_Query = f'SELECT "lr", "{distance_column}" FROM "oseba" WHERE "{distance_column}" IS NOT NULL ORDER BY "{distance_column}" LIMIT 10'
+            postgreSQL_select_Query = f'SELECT "lr", "{distance_column}", "razdalja" FROM "rezultat" WHERE "{distance_column}" IS NOT NULL AND "lr" IS NOT NULL ORDER BY "{distance_column}"'
             cur.execute(postgreSQL_select_Query)
             rows = cur.fetchall()
-            min_times_and_lrs.extend([(row[0], row[1], distance_column) for row in rows])
+            min_times_and_lrs.extend([(row[0], row[1], row[2], distance_column) for row in rows])
+
+        return min_times_and_lrs  # Return the fetched data
 
     except (Exception, psycopg2.Error) as error:
         print("Error while fetching data from PostgreSQL", error)
 
     finally:
-        # closing database connection.
+        # Closing database connection.
         if conn:
             cur.close()
             conn.close()
             print("PostgreSQL connection is closed")
 
-    return 
+
 
 

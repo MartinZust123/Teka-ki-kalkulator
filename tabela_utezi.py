@@ -3,49 +3,73 @@ import data.auth_public as auth
 import psycopg2, psycopg2.extensions, psycopg2.extras
 from Utezi import fetch_data
 
+# Fetch data
 min_times_and_lrs = fetch_data()
-pace_averages = {}  # Dictionary to store average pace for each column
-for lr, min_time, column_name in min_times_and_lrs:
+
+# Dictionary to store average year for each name
+average_years = {}
+
+# Dictionary to store average pace for each name
+average_pace_values = {}  # Changed variable name here
+
+# Dictionary to store distance values
+distance_values = {}
+
+for lr, min_time, divisor, distance_name in min_times_and_lrs:
     if min_time:
-        pace_seconds = (min_time.hour * 3600 + min_time.minute * 60 + min_time.second) / float(column_name[:-2])
-        if column_name in pace_averages:
-            pace_averages[column_name].append(pace_seconds)
+        # Convert datetime.time to seconds
+        pace_seconds = (min_time.hour * 3600 + min_time.minute * 60 + min_time.second) / float(divisor)
+
+        # Calculate the average year
+        if distance_name in average_years:
+            average_years[distance_name].append(lr)
         else:
-            pace_averages[column_name] = [pace_seconds]
+            average_years[distance_name] = [lr]
 
-average_paces = {}  # Dictionary to store average pace for each column
-for column_name, pace_list in pace_averages.items():
+        # Calculate the average pace
+        if distance_name in average_pace_values:  # Use the correct variable name here
+            average_pace_values[distance_name].append(pace_seconds)
+        else:
+            average_pace_values[distance_name] = [pace_seconds]
+
+        # Store the distance value
+        distance_values[distance_name] = divisor
+
+# Calculate the average year for each name
+average_year_values = {}
+for distance_name, years in average_years.items():
+    average_year = sum(years) / len(years)
+    average_year_values[distance_name] = average_year
+
+# Calculate the average pace for each name
+average_pace_values_result = {}  # Changed variable name here
+for distance_name, pace_list in average_pace_values.items():  # Use the correct variable name here
     average_pace = sum(pace_list) / len(pace_list)
-    average_paces[column_name] = average_pace
-
-print("Average paces:", average_paces)
-
-# Calculate opt_leta and save it to the SQL table
-valid_lrs = [row[0] for row in min_times_and_lrs if row[0] is not None]
-average_lr = sum(valid_lrs) / len(valid_lrs)
-opt_leta = average_lr  # Save the average LR value to opt_leta
+    average_pace_values_result[distance_name] = average_pace
 
 # Create a new connection to the database
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor()
 
-# Create a new table to store average paces and opt_leta
+# Create a new table to store data
 cur.execute("""
     CREATE TABLE Utezi (
-        DistanceColumn VARCHAR PRIMARY KEY,
+        DistanceName VARCHAR PRIMARY KEY,
+        AverageYear FLOAT,
         AveragePace FLOAT,
-        OptLeta FLOAT
+        DistanceValue INTEGER
     )
 """)
 
-# Insert the average pace values and opt_leta into the table
-for column_name, average_pace in average_paces.items():
+# Insert the average year, average pace, and distance value into the table
+for distance_name in average_years.keys():
     cur.execute("""
-        INSERT INTO Utezi (DistanceColumn, AveragePace, OptLeta)
-        VALUES (%s, %s, %s)
-    """, (column_name, average_pace, opt_leta))
+        INSERT INTO Utezi (DistanceName, AverageYear, AveragePace, DistanceValue)
+        VALUES (%s, %s, %s, %s)
+    """, (distance_name, average_year_values.get(distance_name, None), average_pace_values_result.get(distance_name, None), distance_values.get(distance_name, None)))
+    conn.commit()
 
-# Commit the changes and close the connection
-conn.commit()
+# Close the database connection
 cur.close()
 conn.close()
+

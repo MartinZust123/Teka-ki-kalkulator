@@ -1,5 +1,4 @@
 import math
-import datetime
 from poberi_utezi import fetch_utezi
 
 # metri
