@@ -202,7 +202,7 @@ def vrni_statistiko():
 def prikazi_treninge():
     uporabnik = bottle.request.get_cookie("uporabnisko_ime")
 
-    teki = repo.dobi_vse_gen_id(Tek, uporabnik, "tekac")
+    teki = repo.dobi_vse_gen_id_ordered(Tek, uporabnik, "datum", False, "tekac")
 
     return bottle.template("tvoji_treningi.html", tabela=teki, username=uporabnik)
 
@@ -223,10 +223,8 @@ def vnesi_trening():
         cas=cas
     )
 
-#!!!!!!!!!!!!!!!!!
-    repo.dodaj_gen(trening) #naj bi manjkal nek permission zato noce commitat na bazo
-
-
+    repo.dodaj_gen(trening) 
+    redirect("/tvoji_treningi/")
 
 #= TEKAŠKI KALKULATOR ============================================================================#
 
@@ -234,7 +232,7 @@ def vnesi_trening():
 def vrni_kalkulator():
     return bottle.template("kalkulator.html")
 
-@get("/preracunaj/")
+@post("/preracunaj/")
 def preracunaj_get():
     pretecena = bottle.request.forms.getunicode("pretecena")
     minute = bottle.request.forms.getunicode("min")
