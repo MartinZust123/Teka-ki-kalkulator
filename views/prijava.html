@@ -12,6 +12,13 @@
                         <h1>Prijava</h1>
                     </td>
                 </tr>
+                %if napaka == "Neuspešna prijava. Napačno geslo ali uporabniško ime.":
+                <tr>
+                    <td>
+                        <h3> Napačno geslo ali uporabniško ime.</h3>
+                    </td>
+                </tr>
+                %end
                 <tr>
                     <td>
                         <h2>Uporabniško ime</h2>

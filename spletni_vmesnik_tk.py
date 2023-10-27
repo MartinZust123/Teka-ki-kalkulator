@@ -61,7 +61,7 @@ def prvi_zaslon():
 
 @get("/prijava/")
 def vrni_prijavo():
-    return template("prijava.html")
+    return template("prijava.html", napaka="Nic")
 
 @post("/prijava/")
 def prijava():
